@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cave model — embedding example</title>
+<!-- The component's stylesheet. The viewer's own (caveview/css/caveview.css) is added by the component. -->
+<link rel="stylesheet" href="css/cave-embed.css">
+<style>body { max-width: 1100px; margin: 0 auto; padding: 0 16px; font: 16px/1.5 sans-serif; color: #222; background: #fff; }</style>
+</head>
+<body>
+<article class="entry-content">
+  <h1>An example page</h1>
+  <!-- The block: a place list and the model. Everything else (switches, tabs, the trips list,
+       the log, the figures) is added by the component. -->
+  <div class="cave_embed">
+    <div class="cave_embed_places" id="example_places"></div>
+    <div class="cave_embed_model cv-container" id="example_model"></div>
+  </div>
+  <p>A link written by hand flies the model to a place:
+    <a class="cv_goto" href="#example_model" data-selection="p8.christmas_aven.2">the foot of the aven</a>.
+    A link can name a person on a trip as well:
+    <a href="#example_model" data-silexgis-trip="EX-1" data-silexgis-caver="1" data-silexgis-moment="2026-09-05T10:30:00Z">where Alex was at 10:30</a>.</p>
+  <p>Names of places marked as landmarks, such as Upper aven (example), become links by themselves.</p>
+</article>
+
+<!-- The viewer (the SilexGIS fork of CaveView), then the component and its modules, in this order. -->
+<script src="caveview/js/CaveView2.min.js"></script>
+<script src="js/cave-embed.js"></script>
+<script src="js/text-autolink.js"></script>
+<script src="js/lightbox.js"></script>
+<script src="js/silexgis-trips.js"></script>
+<script src="js/cave-trips.js"></script>
+<script>
+  // Everything about this cave comes from the data set: the survey, the places, the
+  // photographs and the trips. No WordPress and no SilexGIS installation is involved.
+  window.exampleCave = SilexCaveEmbed.create({
+    container: 'example_model',
+    placeList: 'example_places',
+    placeListTitle: { en: 'Places in the cave', ro: 'Locuri din peșteră' },
+    language: 'en',
+    home: 'caveview/',
+    data: { url: 'set-example/' },
+    view: 'VIEW_PLAN',
+    toolbar: { placement: 'top' },
+    trips: {
+      list: { aside: true },
+      timeZone: 'UTC',
+      log: {},
+      stats: { tab: true }
+    }
+  });
+</script>
+</body>
+</html>

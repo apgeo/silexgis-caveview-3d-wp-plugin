@@ -1,0 +1,4 @@
+/dist/
+/tests/uploads/
+/tests/wp/.env
+node_modules/

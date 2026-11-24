@@ -1,0 +1,44 @@
+# A throwaway WordPress for driving the plugin, used by check.mjs beside this file.
+#
+# The newest WordPress image that still ships PHP 7.4 (the plugin's oldest PHP) is 6.1.1;
+# WP_IMAGE=wordpress:latest runs the same on a current WordPress and PHP. The plugin and the
+# example data set are bound read-only; everything else is named volumes, removed by
+# `docker compose down -v`. The site is published on the loopback address only.
+name: silexgis-caveview-3d-test
+
+services:
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_DATABASE: wordpress
+      MARIADB_USER: wordpress
+      MARIADB_PASSWORD: throwaway-db-password
+      MARIADB_ROOT_PASSWORD: throwaway-root-password
+    volumes:
+      - db:/var/lib/mysql
+
+  wordpress:
+    image: ${WP_IMAGE:-wordpress:6.1.1-php7.4-apache}
+    depends_on:
+      - db
+    ports:
+      - "127.0.0.1:${WP_PORT:-8091}:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: throwaway-db-password
+      WORDPRESS_DB_NAME: wordpress
+      # Notices and warnings are printed into the page, where the driver looks for them.
+      WORDPRESS_DEBUG: "1"
+      WORDPRESS_CONFIG_EXTRA: "define( 'AUTOMATIC_UPDATER_DISABLED', true );"
+    volumes:
+      - html:/var/www/html
+      - ../../plugin/silexgis-caveview-3d:/var/www/html/wp-content/plugins/silexgis-caveview-3d:ro
+      - ./mu-plugins/test-body-class.php:/var/www/html/wp-content/mu-plugins/test-body-class.php:ro
+      - ./php:/silex-test:ro
+      - ../../standalone/set-example:/silex-set:ro
+      - ../../examples:/silex-examples:ro
+
+volumes:
+  db:
+  html:

@@ -1,0 +1,20 @@
+{
+	"container": "cave_model",
+	"placeList": "cave_places",
+	"language": "en",
+	"home": "/wp-content/plugins/silexgis-caveview-3d/vendor/caveview/2.9.0-slx.23/",
+	"surveyDirectory": "/wp-content/uploads/caves/",
+	"terrainDirectory": "/wp-content/uploads/caves/terrain/",
+	"survey": "P8_Master.3d",
+	"view": "VIEW_ELEVATION_N",
+	"places": [
+		{ "station": "p8.bens_dig.217", "label": "Top of the dig (example)", "depth": 0, "landmark": true },
+		{ "station": "p8.christmas_aven.25c", "label": "Upper aven (example)", "depth": 19, "landmark": true },
+		{ "station": "p8.christmas_aven.2", "label": "Aven foot (example)", "depth": 52, "landmark": true }
+	],
+	"pictures": {
+		"root": "/wp-content/uploads/caves/pictures/",
+		"thumbnails": "/wp-content/uploads/caves/pictures/thumbnails/",
+		"byStation": { "p8.christmas_aven.2": ["aven-foot.jpg"] }
+	}
+}

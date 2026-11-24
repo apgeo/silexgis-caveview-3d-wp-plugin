@@ -1,0 +1,657 @@
+# Romanian translation of SilexGIS CaveView 3D's admin screens.
+# This file is distributed under the same licence as the plugin (GPL-3.0-or-later).
+# After a change here, run work/tools/build-translations.py to compile it.
+msgid ""
+msgstr ""
+"Project-Id-Version: SilexGIS CaveView 3D\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2);\n"
+"X-Domain: silexgis-caveview-3d\n"
+
+msgid "3D models — automatic links"
+msgstr "Modele 3D — legături automate"
+
+msgid "3D models (caves)"
+msgstr "Modele 3D (peșteri)"
+
+msgid "You do not have the necessary permission."
+msgstr "Nu aveți permisiunea necesară."
+
+#. translators: %d: how many rows of the table were saved
+msgid "Saved: %d entry."
+msgid_plural "Saved: %d entries."
+msgstr[0] "Salvat: %d denumire."
+msgstr[1] "Salvat: %d denumiri."
+msgstr[2] "Salvat: %d de denumiri."
+
+msgid "Automatic links to the 3D model"
+msgstr "Legături automate către modelul 3D"
+
+msgid "The text of the pages that hold a 3D model is read through as they are shown, and the names of the places it recognises become links that take the camera there. Nothing in the page's content is changed — the links are added only as it is shown."
+msgstr "Textul paginilor care conțin un model 3D este parcurs la afișare, iar denumirile locurilor recunoscute devin legături care duc camera acolo. Nu se modifică nimic în conținutul paginii — legăturile se adaugă doar la afișare."
+
+msgid "Sources"
+msgstr "Surse"
+
+msgid "Enabled"
+msgstr "Activat"
+
+msgid "Make links automatically"
+msgstr "Creează legături automat"
+
+msgid "From the survey"
+msgstr "Din topografie"
+
+msgid "The names the surveyors gave (the stations' comments)"
+msgstr "Denumirile puse de topografi (comentariile stațiilor)"
+
+msgid "They need no upkeep: they come from the survey file."
+msgstr "Nu necesită întreținere: vin din fișierul topografiei."
+
+msgid "From the list below"
+msgstr "Din lista de mai jos"
+
+msgid "The names entered by hand"
+msgstr "Denumirile definite manual"
+
+msgid "Depths"
+msgstr "Adâncimi"
+
+msgid "Mentions such as “−815 m”"
+msgstr "Mențiuni de tipul „−815 m”"
+
+msgid "Only with a sign: “815 m of rope” does not become a link."
+msgstr "Doar cu semn: „815 m de coardă” nu devine legătură."
+
+msgid "Names"
+msgstr "Denumiri"
+
+#. translators: 1: the separator, 2: the name of the Cave column, 3: an example file name
+msgid "A station can have several names, separated by %1$s. %2$s is the name of the survey file (e.g. %3$s); left empty, the row applies to every cave. A name used by two different stations is ignored — an ambiguous link would be a riddle, not a help."
+msgstr "O stație poate avea mai multe denumiri, despărțite prin %1$s. %2$s este numele fișierului topografiei (ex. %3$s); lăsat gol, rândul se aplică tuturor. O denumire folosită de două stații diferite este ignorată — o legătură ambiguă ar fi o ghicitoare, nu un ajutor."
+
+msgid "Cave"
+msgstr "Peșteră"
+
+msgid "Station"
+msgstr "Stație"
+
+#. translators: %s: the separator
+msgid "Names (separated by %s)"
+msgstr "Denumiri (separate prin %s)"
+
+msgid "Depth"
+msgstr "Adâncime"
+
+msgid "Active"
+msgstr "Activ"
+
+msgid "all"
+msgstr "toate"
+
+msgid "Delete the row"
+msgstr "Șterge rândul"
+
+msgid "+ New row"
+msgstr "+ Rând nou"
+
+msgid "Save"
+msgstr "Salvează"
+
+msgid "Export / import"
+msgstr "Export / import"
+
+msgid "The same list as JSON, for moving it elsewhere (into SilexGIS, for example, for pages that are not WordPress)."
+msgstr "Aceeași listă în format JSON, pentru mutarea ei în altă parte (de exemplu în SilexGIS, pentru pagini care nu sunt WordPress)."
+
+msgid "a model's configuration can be written only by an account with the unfiltered_html capability (on a single site: an Editor or an Administrator)"
+msgstr "configurația unui model poate fi scrisă numai de un cont care are dreptul unfiltered_html (pe un sit obișnuit: Editor sau Administrator)"
+
+msgid "it must be a text holding a JSON object"
+msgstr "trebuie să fie un text care conține un obiect JSON"
+
+msgid "3D model (SilexCaveEmbed)"
+msgstr "Model 3D (SilexCaveEmbed)"
+
+msgid "The refused text is the one below; the page goes on using the configuration saved before."
+msgstr "Textul refuzat este cel de mai jos; pagina folosește în continuare configurația salvată anterior."
+
+msgid "The configuration saved on this page is not valid JSON and is ignored when the page is shown:"
+msgstr "Configurația salvată pe această pagină nu este JSON valid și este ignorată la afișare:"
+
+#. translators: %s: the refused fields and the rule they break
+msgid "The configuration saved on this page is not printed, because %s."
+msgstr "Configurația salvată pe această pagină nu este afișată, pentru că %s."
+
+msgid "The configuration of the model on this page — the JSON object SilexCaveEmbed.create() receives: the cave, the places, the photographs and the published trips. The page also needs the [silexgis_cave] shortcode in its content, which puts the model's container on the page."
+msgstr "Configurația modelului de pe această pagină — obiectul JSON pe care îl primește SilexCaveEmbed.create(): peștera, locurile, fotografiile și turele publicate. Pagina are nevoie și de scurtătura [silexgis_cave] în conținut, care pune pe pagină containerul modelului."
+
+msgid "Left empty, the page looks for its configuration in the pages/<slug>.js file beside the component; the shortcode's config=\"...\" attribute names such a file explicitly and comes first."
+msgstr "Lăsată goală, pagina își caută configurația în fișierul pages/<slug>.js de lângă componentă; atributul config=\"...\" al scurtăturii numește un asemenea fișier explicit și are întâietate."
+
+#. translators: %s: the fields that hold an address
+msgid "The addresses in the configuration (%s) must be paths on this site: they begin with a single “/” and contain no host or scheme (https://…), no “//”, no “\\” and no “..”."
+msgstr "Adresele din configurație (%s) trebuie să fie căi de pe acest sit: încep cu un singur „/” și nu conțin gazdă sau schemă (https://…), „//”, „\\” ori „..”."
+
+msgid "The three ways, described (README, “Configuring a page”)"
+msgstr "Descrierea celor trei căi (README, „Configuring a page”)"
+
+msgid "it is not valid JSON: "
+msgstr "nu este JSON valid: "
+
+msgid "it must be a JSON object ({ … })"
+msgstr "trebuie să fie un obiect JSON ({ … })"
+
+msgid "these fields break the rule for addresses above: "
+msgstr "aceste câmpuri nu respectă regula adreselor de mai sus: "
+
+#. translators: %d: how many fields the configuration has at its top level
+msgid "Valid JSON. Top-level fields: %d."
+msgstr "JSON valid. %d câmpuri."
+
+#. translators: %s: why the configuration was refused
+msgid "The 3D model's configuration was not saved, because %s. The page keeps the configuration it had."
+msgstr "Configurația modelului 3D nu a fost salvată, pentru că %s. Pagina păstrează configurația de dinainte."
+
+#. translators: %s: where the text stops being JSON
+msgid "The 3D model's configuration was not saved, because it is not valid JSON — %s. The page keeps the configuration it had."
+msgstr "Configurația modelului 3D nu a fost salvată, pentru că nu este JSON valid — %s. Pagina păstrează configurația de dinainte."
+
+msgid "3D model (SilexCaveEmbed):"
+msgstr "Model 3D (SilexCaveEmbed):"
+
+msgid "Open the page"
+msgstr "Deschide pagina"
+
+msgid "3D models"
+msgstr "Modele 3D"
+
+msgid "How the model looks"
+msgstr "Cum arată modelul"
+
+msgid "Default language of the pages"
+msgstr "Limba implicită a paginilor"
+
+#. translators: %s: the language "the site's language" comes to on this site now, e.g. "English"
+msgid "The site's language (now %s)"
+msgstr "Limba sitului (acum %s)"
+
+msgid "The language a page with a model opens in — its buttons, lists, figures and journal — when the page names no other in its configuration. A reader can choose another language on the page, with the small buttons at the end of the row of switches; their choice is kept in their browser."
+msgstr "Limba în care se deschide o pagină cu model — butoanele, listele, cifrele, jurnalul — când pagina nu spune alta în configurația ei. Cititorul poate alege altă limbă pe pagină, cu butoanele mici din capătul rândului de comutatoare; alegerea lui se păstrează în browserul lui."
+
+#. translators: %s: the languages the pages offer, e.g. "Română, English"
+msgid "“The site's language” is the Site Language set under Settings → General when the pages offer it (%s), and English otherwise."
+msgstr "„Limba sitului” este limba aleasă la Setări → Generale, când paginile o oferă (%s), iar altfel engleza."
+
+msgid "Size of station names"
+msgstr "Mărimea numelor de stații"
+
+msgid "How large the model writes the names of its stations and their comments, as a part of the viewer's own size: 1 is its size, 0.6 six tenths of it. It applies to every page with a model; a page whose configuration says “labelScale” keeps its own value. On very dense screens the writing never shrinks below what can still be read."
+msgstr "Cât de mare scrie modelul numele stațiilor și comentariile lor, ca parte din mărimea vizualizatorului: 1 este mărimea lui, 0,6 înseamnă șase zecimi din ea. Se aplică tuturor paginilor cu model; o pagină a cărei configurație spune „labelScale” își păstrează valoarea. Pe ecranele foarte dense scrisul nu coboară sub ce se mai poate citi."
+
+msgid "The site's copy of the trips"
+msgstr "Copia turelor păstrată de site"
+
+msgid "Keep a copy of the installation's data on this site"
+msgstr "Păstrează pe acest site o copie a datelor instalării"
+
+msgid "Write the trips and the cave — the survey file, the named places, the photographs — to this site every five minutes, and draw the pages from that copy."
+msgstr "Scrie pe acest site, la fiecare cinci minute, turele și peștera — fișierul topografiei, locurile numite, fotografiile — și arată paginile din această copie."
+
+msgid "Switched off, no copy is written and the one already on the server is left as it is but no longer used: the pages read the trips from the installation through this site as they are asked, and the cave through this site's own addresses, which ask the installation in turn. Nothing of the cave or its trips is then shown while the installation is not answering."
+msgstr "Când este oprită, nu se scrie nicio copie, iar cea aflată deja pe server rămâne cum este, dar nu mai este folosită: paginile citesc turele din instalare prin acest site, pe măsură ce sunt cerute, iar peștera prin adresele acestui site, care la rândul lor întreabă instalarea. Cât timp instalarea nu răspunde, nu se arată nimic din peșteră sau din turele ei."
+
+msgid "A note when a page is drawn from the copy"
+msgstr "Notă când pagina este din copie"
+
+msgid "Say on the page, in one small line, when the SilexGIS installation is not answering and the trips are shown from the site's copy, and how old the copy is."
+msgstr "Spune pe pagină, într-un rând mic, când instalarea SilexGIS nu răspunde și turele sunt arătate din copia site-ului, și de când este copia."
+
+msgid "Where the code is"
+msgstr "Unde este codul"
+
+msgid "Components directory"
+msgstr "Directorul componentelor"
+
+msgid "CaveView directory"
+msgstr "Directorul CaveView"
+
+#. translators: %s: the refused value
+msgid "The path “%s” was refused: it must begin and end with “/”, with no spaces and no “..”. The previous value was kept."
+msgstr "Calea „%s” a fost refuzată: trebuie să înceapă și să se termine cu „/”, fără spații și fără „..”. Valoarea de dinainte a fost păstrată."
+
+#. translators: 1: the refused value, 2: the file that was looked for
+msgid "The path “%1$s” was refused: %2$s is not on the server, so the pages with a model would be left without their code. Put the files there first. The previous value was kept."
+msgstr "Calea „%1$s” a fost refuzată: %2$s nu există pe server, deci paginile cu model ar rămâne fără cod. Puneți întâi fișierele acolo. Valoarea de dinainte a fost păstrată."
+
+#. translators: 1: the refused value, 2: the smallest value accepted, 3: the largest
+msgid "The size “%1$s” was refused: it must be a number between %2$s and %3$s. The previous value was kept."
+msgstr "Mărimea „%1$s” a fost refuzată: trebuie să fie un număr între %2$s și %3$s. Valoarea de dinainte a fost păstrată."
+
+#. translators: %s: a file path
+msgid "%s is on the server."
+msgstr "%s există pe server."
+
+#. translators: %s: a file path
+msgid "%s is not on the server: the pages with a model will stay empty until the code is put there or the path is corrected."
+msgstr "%s nu există pe server: paginile cu model vor rămâne goale până când codul este pus acolo sau calea este corectată."
+
+msgid "A page reads the finished trips from a file the site writes by itself from the SilexGIS installation every five minutes: a change made on the installation reaches the page within that time at most. When the installation does not answer, the file stays as it was and the page is shown from it."
+msgstr "Pagina citește turele terminate dintr-un fișier pe care site-ul îl scrie singur din instalarea SilexGIS, la fiecare cinci minute: o schimbare făcută în instalare ajunge pe pagină în cel mult atât. Când instalarea nu răspunde, fișierul rămâne cum era și pagina este arătată din el."
+
+msgid "The site keeps no copy at the moment: the pages read the installation as they are asked."
+msgstr "Site-ul nu păstrează acum nicio copie: paginile citesc instalarea pe măsură ce sunt cerute."
+
+msgid "There are no links to published trips yet, so there is no copy either."
+msgstr "Nu există încă legături de ture publicate, deci nici copie."
+
+msgid "Cave (group of links)"
+msgstr "Peștera (grupul de legături)"
+
+msgid "Last try"
+msgstr "Ultima încercare"
+
+msgid "Last written"
+msgstr "Scrisă ultima dată"
+
+msgid "Trips"
+msgstr "Ture"
+
+msgid "never"
+msgstr "niciodată"
+
+#. translators: %s: what went wrong, e.g. "unreachable" or "HTTP 503"
+msgid "failed: %s"
+msgstr "nereușită: %s"
+
+msgid "not written"
+msgstr "nescrisă"
+
+msgid "written, with no survey file"
+msgstr "scrisă, fără fișierul topografiei"
+
+msgid "survey fetched at the last writing"
+msgstr "topografia a fost adusă la ultima scriere"
+
+msgid "the survey could not be fetched at the last writing"
+msgstr "topografia nu a putut fi adusă la ultima scriere"
+
+#. translators: 1: copies written, 2: copies asked for
+msgid "The copy of the trips: %1$s of %2$s written just now."
+msgstr "Copia turelor: %1$s din %2$s scrise acum."
+
+msgid "Write the copy of the trips now"
+msgstr "Scrie acum copia turelor"
+
+msgid "The other screens"
+msgstr "Celelalte ecrane"
+
+msgid "the table of names that turns the names of places in the text into links to the model."
+msgstr "tabelul de denumiri care transformă numele locurilor din text în legături către model."
+
+msgid "Published trips (SilexGIS)"
+msgstr "Ture publicate (SilexGIS)"
+
+msgid "the installation's address and the published trips' links, kept on the server and never in the page."
+msgstr "adresa instalării și legăturile turelor publicate, păstrate pe server și niciodată în pagină."
+
+msgid "How a page gets a model"
+msgstr "Cum primește o pagină un model"
+
+msgid "The page's content carries the [silexgis_cave] shortcode, which puts the model's container on the page (with the attributes id, places, places_id, height, width, class, config; a caption is written between [silexgis_cave] and [/silexgis_cave])."
+msgstr "Conținutul paginii poartă scurtătura [silexgis_cave], care pune pe pagină containerul modelului (cu atributele id, places, places_id, height, width, class, config; o legendă se scrie între [silexgis_cave] și [/silexgis_cave])."
+
+msgid "The plugin loads the styles and scripts itself, at the foot of the page; the content must hold no script or link tag."
+msgstr "Pluginul încarcă singur stilurile și scripturile, în subsolul paginii; conținutul nu trebuie să conțină nicio etichetă script sau link."
+
+msgid "the name may hold only small letters without diacritics, digits, “-” and “_”, must begin with a letter or a digit, and may be 40 characters long at most."
+msgstr "numele poate avea doar litere mici fără diacritice, cifre, „-” și „_”, trebuie să înceapă cu o literă sau o cifră și poate avea cel mult 40 de caractere."
+
+msgid "this server's PHP cannot read zip archives (its zip extension is missing); the host can switch it on."
+msgstr "PHP-ul acestui server nu poate citi arhive zip (îi lipsește extensia zip); găzduirea o poate activa."
+
+msgid "the file is not a zip archive that can be read."
+msgstr "fișierul nu este o arhivă zip care poate fi citită."
+
+msgid "the archive holds a file a data set may not hold: a path that leads out of the set or is more than two folders deep, or a kind of file other than JSON, a survey (.lox, .3d, .plt) or a picture (.jpg, .png, .webp)."
+msgstr "arhiva conține un fișier pe care un set de date nu îl poate conține: o cale care iese din set sau are mai mult de două dosare, ori un fel de fișier altul decât JSON, o topografie (.lox, .3d, .plt) sau o imagine (.jpg, .png, .webp)."
+
+#. translators: %s: a size, e.g. "200 MB"
+msgid "the archive unpacks to more than %s."
+msgstr "arhiva se despachetează în mai mult de %s."
+
+msgid "the archive has no cave.json of a data set's form at its root."
+msgstr "arhiva nu are la rădăcină un cave.json de forma unui set de date."
+
+#. translators: %s: a size, e.g. "8 MB"
+msgid "no archive arrived: none was chosen, or it is larger than this server accepts (%s)."
+msgstr "nu a sosit nicio arhivă: nu a fost aleasă niciuna sau este mai mare decât acceptă acest server (%s)."
+
+msgid "the data set could not be written on the server; the set of that name, if there was one, is as it was."
+msgstr "setul de date nu a putut fi scris pe server; setul cu acest nume, dacă exista, a rămas cum era."
+
+msgid "Data sets"
+msgstr "Seturi de date"
+
+#. translators: 1: how a page names a data set in its configuration, 2: the files a data set holds
+msgid "A data set is a cave and its trips as plain files — %2$s — which a page draws with no installation behind it, named in its configuration as %1$s. The site's copy of each installation's cave is one, under the name of its group of links; others are imported here, from a zip archive of such a directory. An imported set comes over the site's copy of the same name. A SilexGIS installation will later be able to export such an archive for a cave and its published trips."
+msgstr "Un set de date este o peșteră și turele ei ca fișiere simple — %2$s — pe care o pagină le arată fără nicio instalare în spate, numit în configurația ei ca %1$s. Copia site-ului pentru peștera fiecărei instalări este un astfel de set, sub numele grupului ei de legături; altele se importă aici, dintr-o arhivă zip a unui asemenea director. Un set importat are întâietate față de copia site-ului cu același nume. O instalare SilexGIS va putea mai târziu să exporte o astfel de arhivă pentru o peșteră și turele ei publicate."
+
+#. translators: 1: the data set's name, 2: how many files it holds
+msgid "The data set “%1$s” was imported: %2$d file."
+msgid_plural "The data set “%1$s” was imported: %2$d files."
+msgstr[0] "Setul de date „%1$s” a fost importat: %2$d fișier."
+msgstr[1] "Setul de date „%1$s” a fost importat: %2$d fișiere."
+msgstr[2] "Setul de date „%1$s” a fost importat: %2$d de fișiere."
+
+#. translators: %s: the data set's name
+msgid "The data set “%s” was deleted."
+msgstr "Setul de date „%s” a fost șters."
+
+#. translators: %s: the data set's name
+msgid "The data set “%s” could not be deleted."
+msgstr "Setul de date „%s” nu a putut fi șters."
+
+#. translators: %s: why the archive was refused
+msgid "Nothing was imported, and nothing was changed: %s"
+msgstr "Nu s-a importat nimic și nu s-a schimbat nimic: %s"
+
+msgid "No data set has been imported."
+msgstr "Nu a fost importat niciun set de date."
+
+msgid "Name"
+msgstr "Nume"
+
+msgid "Files"
+msgstr "Fișiere"
+
+msgid "Imported"
+msgstr "Importat"
+
+#. translators: %s: the data set's name
+msgid "Delete the data set “%s”? Pages that name it will have no cave."
+msgstr "Ștergeți setul de date „%s”? Paginile care îl numesc vor rămâne fără peșteră."
+
+msgid "Delete"
+msgstr "Șterge"
+
+msgid "Archive (.zip)"
+msgstr "Arhivă (.zip)"
+
+#. translators: 1: the largest archive this server accepts, 2: the largest a set may unpack to
+msgid "Small letters without diacritics, digits, “-” and “_”, at most 40 characters: the name pages use. An archive with the name of a set already here replaces it whole. This server accepts archives of up to %1$s, unpacking to %2$s at most."
+msgstr "Litere mici fără diacritice, cifre, „-” și „_”, cel mult 40 de caractere: numele pe care îl folosesc paginile. O arhivă cu numele unui set aflat deja aici îl înlocuiește în întregime. Acest server acceptă arhive de până la %1$s, care se despachetează în cel mult %2$s."
+
+msgid "Import the archive"
+msgstr "Importă arhiva"
+
+msgid "You are not allowed to do this."
+msgstr "Nu aveți voie."
+
+msgid "the configuration must be a JSON object: it begins with { and ends with }"
+msgstr "configurația trebuie să fie un obiect JSON: să înceapă cu { și să se termine cu }"
+
+#. translators: 1: the refused fields, 2: the fields that hold an address
+msgid "these fields break the rule for addresses: %1$s. An address (%2$s) is a path on this site — it begins with a single “/” and contains no host or scheme (https://…), no “//”, no “\\” and no “..”; survey is a file name in surveyDirectory, language is a language code, and no key may be named __proto__"
+msgstr "aceste câmpuri nu respectă regula adreselor: %1$s. O adresă (%2$s) este o cale de pe acest sit — începe cu un singur „/” și nu conține gazdă sau schemă (https://…), „//”, „\\” ori „..”; survey este un nume de fișier din surveyDirectory, language este un cod de limbă, iar nicio cheie nu se poate numi __proto__"
+
+msgid "text after the end of the value"
+msgstr "text după sfârșitul valorii"
+
+#. translators: 1: line number, 2: column number, 3: what was found there
+msgid "line %1$d, column %2$d: %3$s"
+msgstr "linia %1$d, coloana %2$d: %3$s"
+
+msgid "a comment — JSON allows no comments; delete it"
+msgstr "comentariu — JSON nu permite comentarii; ștergeți-l"
+
+msgid "single quotes — JSON needs double quotes (\")"
+msgstr "ghilimele simple — JSON cere ghilimele duble (\")"
+
+msgid "an extra comma"
+msgstr "virgulă în plus"
+
+#. translators: 1: what was expected, 2: what was found instead
+msgid "%1$s, but here there is “%2$s”"
+msgstr "%1$s, dar aici este „%2$s”"
+
+msgid "a value was expected, but the text ended"
+msgstr "se aștepta o valoare, dar textul s-a terminat"
+
+msgid "a value was expected"
+msgstr "se aștepta o valoare"
+
+msgid "a number written wrongly"
+msgstr "număr scris greșit"
+
+msgid "an incomplete \\u sequence — it needs four hexadecimal digits"
+msgstr "secvență \\u incompletă — îi trebuie patru cifre hexazecimale"
+
+msgid "an unknown escape sequence after \\"
+msgstr "secvență de evadare necunoscută după \\"
+
+msgid "a string left open at the end of the line — is the closing quote missing?"
+msgstr "șir de caractere neînchis înainte de sfârșitul liniei — lipsesc ghilimelele de închidere?"
+
+msgid "a control character inside a string"
+msgstr "caracter de control într-un șir de caractere"
+
+msgid "a string that is never closed"
+msgstr "șir de caractere neînchis"
+
+msgid "an extra comma before }"
+msgstr "virgulă în plus înainte de }"
+
+msgid "a property name, in double quotes, was expected"
+msgstr "se aștepta numele unei proprietăți, între ghilimele"
+
+msgid "a “:” was expected after the property name"
+msgstr "se aștepta „:” după numele proprietății"
+
+msgid "an object that is never closed — the } is missing"
+msgstr "obiect neînchis — lipsește }"
+
+msgid "a “,” or a “}” was expected"
+msgstr "se aștepta „,” sau „}”"
+
+msgid "an extra comma before ]"
+msgstr "virgulă în plus înainte de ]"
+
+msgid "a list that is never closed — the ] is missing"
+msgstr "listă neînchisă — lipsește ]"
+
+msgid "a “,” or a “]” was expected"
+msgstr "se aștepta „,” sau „]”"
+
+msgid "Every five minutes (the copy of the trips)"
+msgstr "La fiecare cinci minute (copia turelor)"
+
+msgid "Published trips"
+msgstr "Ture publicate"
+
+#. translators: %d: a line number
+msgid "line %d is not of the form “name = token”"
+msgstr "linia %d nu are forma „nume = simbol”"
+
+#. translators: %d: a line number
+msgid "line %d: a name may hold only letters without diacritics, digits, “_” and “-”, 40 characters at most — otherwise the page cannot ask for it"
+msgstr "linia %d: numele poate avea doar litere fără diacritice, cifre, „_” și „-”, cel mult 40 de caractere — altfel pagina nu îl poate cere"
+
+#. translators: %d: a line number
+msgid "line %d: the token contains spaces"
+msgstr "linia %d: simbolul conține spații"
+
+#. translators: 1: a line number, 2: the line the same name stands on
+msgid "line %1$d: the name is repeated (it is on line %2$d as well)"
+msgstr "linia %1$d: numele se repetă (este și pe linia %2$d)"
+
+#. translators: %s: the names of the links, separated by commas
+msgid "The link %s stands alone in its group: if it stops answering, no other link answers in its place, and the page that uses it shows that no trip is being followed."
+msgid_plural "Each of the links %s stands alone in its group: if it stops answering, no other link answers in its place, and the page that uses it shows that no trip is being followed."
+msgstr[0] "Legătura %s este singură în grupul ei: dacă nu mai răspunde, nicio altă legătură nu răspunde în locul ei, iar pagina care o folosește arată că nu este urmărită nicio tură."
+msgstr[1] "Fiecare dintre legăturile %s este singură în grupul ei: dacă nu mai răspunde, nicio altă legătură nu răspunde în locul ei, iar pagina care o folosește arată că nu este urmărită nicio tură."
+msgstr[2] "Fiecare dintre legăturile %s este singură în grupul ei: dacă nu mai răspunde, nicio altă legătură nu răspunde în locul ei, iar pagina care o folosește arată că nu este urmărită nicio tură."
+
+msgid "The links of one cave carry the same name followed by -number (name-1, name-2)."
+msgstr "Legăturile aceleiași peșteri poartă același nume urmat de -număr (nume-1, nume-2)."
+
+#. translators: %d: how many links were saved
+msgid "Saved: %d link, but without the installation's address: the pages get nothing until it is filled in."
+msgid_plural "Saved: %d links, but without the installation's address: the pages get nothing until it is filled in."
+msgstr[0] "Salvat: %d legătură, dar fără adresa instalării: paginile nu primesc nimic până când este completată."
+msgstr[1] "Salvat: %d legături, dar fără adresa instalării: paginile nu primesc nimic până când este completată."
+msgstr[2] "Salvat: %d de legături, dar fără adresa instalării: paginile nu primesc nimic până când este completată."
+
+msgid "Saved: no links."
+msgstr "Salvat: nicio legătură."
+
+#. translators: %d: how many links were saved
+msgid "Saved: %d link, but the installation could not be reached at the address given, so the link was not checked. Until it answers, the page says that the trips could not be loaded."
+msgid_plural "Saved: %d links, but the installation could not be reached at the address given, so the links were not checked. Until it answers, the page says that the trips could not be loaded."
+msgstr[0] "Salvat: %d legătură, dar instalarea nu a putut fi contactată la adresa dată, așa că legătura nu a fost verificată. Până când răspunde, pagina arată că turele nu au putut fi încărcate."
+msgstr[1] "Salvat: %d legături, dar instalarea nu a putut fi contactată la adresa dată, așa că legăturile nu au fost verificate. Până când răspunde, pagina arată că turele nu au putut fi încărcate."
+msgstr[2] "Salvat: %d de legături, dar instalarea nu a putut fi contactată la adresa dată, așa că legăturile nu au fost verificate. Până când răspunde, pagina arată că turele nu au putut fi încărcate."
+
+#. translators: 1: how many links were saved, 2: what the installation answered instead, e.g. "status 503"
+msgid "Saved: %1$d link, but the installation gave no answer just now (%2$s), so the link was not checked."
+msgid_plural "Saved: %1$d links, but the installation gave no answer just now (%2$s), so the links were not checked."
+msgstr[0] "Salvat: %1$d legătură, dar instalarea nu a dat acum un răspuns (%2$s), așa că legătura nu a fost verificată."
+msgstr[1] "Salvat: %1$d legături, dar instalarea nu a dat acum un răspuns (%2$s), așa că legăturile nu au fost verificate."
+msgstr[2] "Salvat: %1$d de legături, dar instalarea nu a dat acum un răspuns (%2$s), așa că legăturile nu au fost verificate."
+
+msgid "an answer that cannot be read"
+msgstr "răspuns de necitit"
+
+#. translators: %d: an HTTP status code
+msgid "status %d"
+msgstr "stare %d"
+
+#. translators: %d: how many links were saved
+msgid "Saved: %d link, but the installation answered 404 for it: either the address is not that of a SilexGIS installation, or the link has been revoked or has expired. Until this is corrected, the page says that no trip is being followed."
+msgid_plural "Saved: %d links, but the installation answered 404 for each of them: either the address is not that of a SilexGIS installation, or all the links have been revoked or have expired. Until this is corrected, the page says that no trip is being followed."
+msgstr[0] "Salvat: %d legătură, dar instalarea a răspuns 404 pentru ea: fie adresa nu este a unei instalări SilexGIS, fie legătura a fost revocată sau a expirat. Până la corectare, pagina arată că nu este urmărită nicio tură."
+msgstr[1] "Salvat: %d legături, dar instalarea a răspuns 404 pentru fiecare dintre ele: fie adresa nu este a unei instalări SilexGIS, fie toate legăturile au fost revocate sau au expirat. Până la corectare, pagina arată că nu este urmărită nicio tură."
+msgstr[2] "Salvat: %d de legături, dar instalarea a răspuns 404 pentru fiecare dintre ele: fie adresa nu este a unei instalări SilexGIS, fie toate legăturile au fost revocate sau au expirat. Până la corectare, pagina arată că nu este urmărită nicio tură."
+
+#. translators: 1: how many links were saved, 2: how many of them the installation answers for, 3: the names of the others
+msgid "Saved: %1$d link; the installation answers for %2$d. No longer answering (revoked, expired or mistyped): %3$s."
+msgid_plural "Saved: %1$d links; the installation answers for %2$d. No longer answering (revoked, expired or mistyped): %3$s."
+msgstr[0] "Salvat: %1$d legătură; instalarea răspunde pentru %2$d. Nu mai răspunde (revocată, expirată sau scrisă greșit): %3$s."
+msgstr[1] "Salvat: %1$d legături; instalarea răspunde pentru %2$d. Nu mai răspund (revocate, expirate sau scrise greșit): %3$s."
+msgstr[2] "Salvat: %1$d de legături; instalarea răspunde pentru %2$d. Nu mai răspund (revocate, expirate sau scrise greșit): %3$s."
+
+#. translators: %d: how many links were saved
+msgid "Saved: %d link; the installation answers for it."
+msgid_plural "Saved: %d links; the installation answers for all of them."
+msgstr[0] "Salvat: %d legătură; instalarea răspunde pentru ea."
+msgstr[1] "Salvat: %d legături; instalarea răspunde pentru toate."
+msgstr[2] "Salvat: %d de legături; instalarea răspunde pentru toate."
+
+msgid "the installation's address must be of the form https://domain"
+msgstr "adresa instalării trebuie să fie de forma https://domeniu"
+
+#. translators: %s: what is wrong with the save, one problem after another
+msgid "Nothing was saved: %s. The text below is the one that was sent."
+msgstr "Nimic nu a fost salvat: %s. Textul de mai jos este cel trimis."
+
+msgid "Only the scheme and the domain of the address were kept."
+msgstr "Din adresă s-au păstrat doar schema și domeniul."
+
+msgid "The address is http: the links travel unencrypted between this server and the installation."
+msgstr "Adresa este http: legăturile circulă necriptat între acest server și instalare."
+
+msgid "The cache has been emptied."
+msgstr "Memoria temporară a fost golită."
+
+#. translators: 1 and 2: the start and the end of the emphasis on "is"
+msgid "Every trip published in SilexGIS has a link of its own. The link %1$sis%2$s the key to it: whoever has it sees the page. That is why it is kept here, on the server, and not in the page the visitor reads."
+msgstr "Fiecare tură publicată în SilexGIS are o legătură proprie. Legătura %1$seste%2$s cheia de acces: cine o are, vede pagina. De aceea se păstrează aici, pe server, și nu în pagina pe care o citește vizitatorul."
+
+msgid "A link saved here is public from that moment."
+msgstr "O legătură salvată aici este publică din acel moment."
+
+#. translators: %s: the address a link is read at through this site
+msgid "The token never leaves the server, but what the installation shows through it — the trip, the party, the positions — can be read through this site by anybody who knows or guesses the link's name (%s), whether the page that uses it is published, a draft or protected by a password."
+msgstr "Simbolul nu părăsește serverul, dar ceea ce arată instalarea prin el — tura, echipa, pozițiile — poate fi citit prin acest site de oricine cunoaște sau ghicește numele legăturii (%s), indiferent dacă pagina care o folosește este publicată, ciornă sau protejată cu parolă."
+
+msgctxt "a link's name, in an address"
+msgid "name"
+msgstr "nume"
+
+msgid "The installation's address"
+msgstr "Adresa instalării"
+
+msgid "https://example.org"
+msgstr "https://exemplu.ro"
+
+msgid "No path after it — only the scheme and the domain; whatever follows the domain is not kept. On saving, the installation is asked once for each link, and the message says what it answered."
+msgstr "Fără cale în plus — doar schema și domeniul; ce urmează după domeniu nu se păstrează. La salvare instalarea este întrebată o dată pentru fiecare legătură, iar mesajul spune ce a răspuns."
+
+msgid "Links"
+msgstr "Legături"
+
+#. translators: 1: the form of a line, 2: the configuration's field, 3 to 5: the characters named
+msgid "One per line, in the form %1$s. The name appears in the page's configuration (%2$s) and may hold only letters without diacritics, digits, %3$s and %4$s, 40 characters at most; the token never leaves the server. Lines that begin with %5$s are notes and are kept as they were written. A line that cannot be understood stops the save and is named in the message: nothing is lost in silence."
+msgstr "Câte una pe linie, sub forma %1$s. Numele apare în configurația paginii (%2$s) și poate avea doar litere fără diacritice, cifre, %3$s și %4$s, cel mult 40 de caractere; simbolul nu părăsește serverul. Liniile care încep cu %5$s sunt note și se păstrează așa cum au fost scrise. O linie care nu poate fi înțeleasă oprește salvarea și este numită în mesaj: nimic nu se pierde în tăcere."
+
+msgid "name = token"
+msgstr "nume = simbol"
+
+msgctxt "the name of another cave's links, as in other-1"
+msgid "other"
+msgstr "alta"
+
+#. translators: 1: the ending of a name, 2 and 3: two names of one cave's links, 4 and 5: two of another cave's
+msgid "The links of one cave carry the same name followed by %1$s (%2$s, %3$s, …) and form a group. The archive and the tracks are asked for through the first link of the group that answers, beginning with the one that answered last: a revoked or expired link does not hide the archive while the group still has a valid one. The list of the followed trips is asked for through the link the page names, because the installation places the parties on the survey of the link that asks; only when that one stops answering does the list come through another link of the group, and the parties measured on another survey then appear without a position on the model; a link that refused the list is asked, for an hour, only after the others. Another cave's links get another name (%4$s, %5$s): a group never answers through another group's links. A name without %1$s is a group of its own."
+msgstr "Legăturile aceleiași peșteri poartă același nume urmat de %1$s (%2$s, %3$s, …) și formează un grup. Arhiva și traseele se cer prin prima legătură a grupului care răspunde, începând cu cea care a răspuns ultima dată: o legătură revocată sau expirată nu ascunde arhiva cât timp grupul mai are una valabilă. Lista turelor urmărite se cere prin legătura pe care o numește pagina, pentru că instalarea așază echipele pe topografia legăturii care întreabă; numai când aceea nu mai răspunde vine lista prin altă legătură a grupului, iar echipele măsurate pe altă topografie apar atunci fără poziție pe model; o legătură care a refuzat lista este întrebată, timp de o oră, numai după celelalte. Legăturile altei peșteri primesc alt nume (%4$s, %5$s): un grup nu răspunde niciodată prin legăturile altuia. Un nume fără %1$s este un grup de unul singur."
+
+msgid "-number"
+msgstr "-număr"
+
+msgid "Empty the cache"
+msgstr "Golește memoria temporară"
+
+#. translators: %s: the name of the button that empties the cache
+msgid "The installation's answers are kept for a short time (a link's trip and the list of the followed trips 20 s, the archive 5 min, a finished trip's track 1 min). A corrected report, a revoked link or a cave made protected shows on the page after that long at the latest. The reader's browser may keep an answer as well, but for 20 s at most and never beyond the time the copy here has left: the two do not add up beyond the times above. A refusal by the installation is remembered for 20 s. If two different reads in a row get no answer, the installation is not asked for 20 s; if one and the same read gets no answer twice in a row — a long track, say — only that read is not made for 20 s, and the rest goes on. %s deletes the copies on this server at once; a browser that has just read an answer may still show it for 20 s at most. Saving empties it as well."
+msgstr "Răspunsurile instalării sunt păstrate scurt timp (tura unei legături și lista turelor urmărite 20 s, arhiva 5 min, traseul unei ture încheiate 1 min). Un raport corectat, o legătură revocată sau o peșteră trecută pe protejat se văd pe pagină cel târziu după atât. Browserul cititorului poate păstra și el un răspuns, dar cel mult 20 s și niciodată peste timpul rămas copiei de aici: cele două nu se adună peste timpii de mai sus. Un refuz al instalării este ținut minte 20 s. Dacă două citiri diferite la rând rămân fără răspuns, instalarea nu mai este întrebată timp de 20 s; dacă rămâne de două ori la rând fără răspuns una și aceeași citire — un traseu lung, de pildă — doar ea nu mai este făcută 20 s, iar restul merge mai departe. %s șterge imediat copiile de pe acest server; un browser care tocmai a citit un răspuns îl mai poate arăta cel mult 20 s. Salvarea golește și ea."
+
+#. translators: 1: a header's name, 2: a file's name, 3, 5 and 6: settings of the installation, 4: a setting of its web server, 7: a network mask
+msgid "The installation counts requests per address, and every reader reaches it through this server, so as one single address. That is why this server sends the reader's address in %1$s; the installation takes it into account only if its operator declares this server a trusted proxy, in the installation's %2$s file: %3$s (one more than without this site: 3 under the TLS overlay, where the value is changed in the overlay's file and the address is also added to %4$s in the Caddyfile), %5$s the installation's Compose network (naming a network replaces the default list) and %6$s the address this server makes its requests from, with %7$s. Without these settings nothing changes. On shared hosting that address belongs to every site on the same server: declared trusted, any of them can present any address to the installation."
+msgstr "Instalarea numără cererile pe adresă, iar toți cititorii ajung la ea prin acest server, deci ca o singură adresă. Serverul trimite de aceea adresa cititorului în %1$s; instalarea o ia în seamă numai dacă operatorul ei declară acest server drept proxy de încredere, în fișierul %2$s al instalării: %3$s (cu unul mai mult decât fără acest site: 3 sub suprapunerea TLS, unde valoarea se schimbă în fișierul suprapunerii, iar adresa se trece și la %4$s în Caddyfile), %5$s rețeaua Compose a instalării (a numi o rețea înlocuiește lista implicită) și %6$s adresa de la care acest server face cereri, cu %7$s. Fără aceste setări nu se schimbă nimic. Pe găzduire partajată adresa aceea este a tuturor site-urilor de pe același server: declarată de încredere, oricare dintre ele poate prezenta instalării orice adresă."
+
+#. Description of the plugin
+msgid "A cave's 3D survey model on a page — its places, photographs and the trips a SilexGIS installation publishes — driven by configuration."
+msgstr "Modelul 3D al topografiei unei peșteri pe o pagină — locurile, fotografiile și turele publicate de o instalare SilexGIS — după o configurație."
+
+#. translators: 1: number of published pages carrying a model, 2: the shortcode, 3: the REST namespace
+msgid "Deactivating SilexGIS CaveView 3D stops the 3D model on %1$d published page (its styles and scripts no longer load, and the [%2$s] shortcode shows as text) and the published trips' proxy (the %3$s routes answer 404). Deactivate the plugin?"
+msgid_plural "Deactivating SilexGIS CaveView 3D stops the 3D models on %1$d published pages (their styles and scripts no longer load, and the [%2$s] shortcode shows as text) and the published trips' proxy (the %3$s routes answer 404). Deactivate the plugin?"
+msgstr[0] "Dezactivarea pluginului SilexGIS CaveView 3D oprește modelul 3D de pe %1$d pagină publicată (stilurile și scripturile nu se mai încarcă, iar scurtătura [%2$s] apare ca text) și proxy-ul turelor publicate (rutele %3$s răspund 404). Dezactivați pluginul?"
+msgstr[1] "Dezactivarea pluginului SilexGIS CaveView 3D oprește modelele 3D de pe %1$d pagini publicate (stilurile și scripturile nu se mai încarcă, iar scurtătura [%2$s] apare ca text) și proxy-ul turelor publicate (rutele %3$s răspund 404). Dezactivați pluginul?"
+msgstr[2] "Dezactivarea pluginului SilexGIS CaveView 3D oprește modelele 3D de pe %1$d de pagini publicate (stilurile și scripturile nu se mai încarcă, iar scurtătura [%2$s] apare ca text) și proxy-ul turelor publicate (rutele %3$s răspund 404). Dezactivați pluginul?"
+
+msgid "the plugin is active but loads nothing, because another plugin — a second copy of this one, or an older site-specific plugin with the same functions — is already serving the 3D models. Deactivate one of the two."
+msgstr "pluginul este activ, dar nu încarcă nimic, pentru că alt plugin — o a doua copie a acestuia sau un plugin mai vechi, făcut pentru un anumit sit, cu aceleași funcții — servește deja modelele 3D. Dezactivați unul dintre cele două."
+
+msgid "Left empty, a field means the copy the plugin ships, which is updated with the plugin. A directory named instead is a path from the root of the site, begins and ends with “/” and contains no spaces; it is read from the disk under the WordPress directory, so it serves only a WordPress installed at the root of its host. A value that does not look like that is refused, and the one before it stays. So is a path where the code is not on the server: the files go there first, then the path is changed."
+msgstr "Lăsat gol, un câmp înseamnă copia livrată cu pluginul, care se actualizează odată cu el. Un director numit în locul ei este o cale de la rădăcina sitului, începe și se termină cu „/” și nu conține spații; este citit de pe disc din directorul WordPress, așa că servește doar un WordPress instalat la rădăcina gazdei sale. O valoare care nu arată așa este refuzată și cea de dinainte rămâne. La fel este refuzată o cale la care codul nu se află pe server: întâi se pun fișierele acolo, apoi se schimbă calea."
+
+msgid "The component, with css/, js/ and pages/ (the pages' configuration files). Empty: the plugin's own, with the pages' files under the uploads directory."
+msgstr "Componenta, cu css/, js/ și pages/ (fișierele de configurație ale paginilor). Gol: cea a pluginului, cu fișierele paginilor în directorul de încărcări (uploads)."
+
+#. translators: %s: the version of the viewer build the plugin ships
+msgid "A build of the CaveView.js fork the component is written against. Empty: the build the plugin ships, %s."
+msgstr "Un build al variantei CaveView.js pentru care este scrisă componenta. Gol: build-ul livrat cu pluginul, %s."
+
+#. translators: %s: the directory of the copy the plugin ships
+msgid "The plugin's own copy, %s."
+msgstr "Copia pluginului, %s."
+
+msgid "The plugin puts a cave's 3D model on a page, with its places, its photographs and its published trips. It loads the model's scripts and styles only on the pages that carry a model, and hands each page its configuration."
+msgstr "Pluginul pune pe o pagină modelul 3D al unei peșteri, locurile ei, fotografiile și turele publicate. Încarcă scripturile și stilurile modelului doar pe paginile care poartă un model și îi dă fiecărei pagini configurația ei."
+
+msgid "The model's configuration — the cave, the places, the photographs, the trips — comes from one of three places, in this order: the file named by the shortcode's config=\"...\" attribute; the “3D model (SilexCaveEmbed)” box on the page, holding the configuration as JSON; a file pages/<slug>.js, named after the page's address, in the pages' directory (see “Where the code is”)."
+msgstr "Configurația modelului — peștera, locurile, fotografiile, turele — vine dintr-unul din trei locuri, în această ordine: fișierul numit de atributul config=\"...\" al scurtăturii; caseta „Model 3D (SilexCaveEmbed)” de pe pagină, cu configurația ca JSON; un fișier pages/<slug>.js, numit după adresa paginii, în directorul paginilor (vezi „Unde este codul”)."

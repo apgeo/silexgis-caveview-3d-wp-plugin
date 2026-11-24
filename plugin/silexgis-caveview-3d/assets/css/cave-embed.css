@@ -1,0 +1,2380 @@
+/* ==========================================================================
+ * SilexCaveEmbed — a cave model sitting beside an article.
+ *
+ * The block floats out of the text on a wide screen and takes the full width on
+ * a narrow one. Nothing here is specific to a cave or a page; the only thing a
+ * host page chooses is the width, via --cave-embed-width.
+ * ========================================================================== */
+
+/* The reader's two switches: the block's own first row, so they travel with the
+   model rather than sitting at the top of the article away from it. */
+.cave_embed_switches {
+	flex: 0 0 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+	align-items: center;
+	margin: 0 0 6px 0;
+	font-size: 13px;
+	color: #4b5563;
+}
+
+.cave_switch {
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	cursor: pointer;
+	user-select: none;
+}
+
+.cave_switch input {
+	margin: 0;
+	cursor: pointer;
+}
+
+.cave_embed {
+	/* Wide enough for the fifteen-control toolbar (539px over the model) beside the
+	   station list; it shrinks with the column and the toolbar drops to a set that
+	   fits, rather than wrapping onto a second row over a short model. */
+	--cave-embed-width: min(760px, 62%);
+	--cave-embed-height: 460px;
+	--cave-embed-places: 206px;
+
+	float: right;
+	/* Wrapping, so the switches can take a full-width row above the list and model. */
+	flex-wrap: wrap;
+	/* The list must not decide how tall the block is — the model does. Without this
+	   a survey with wordy landmark names stretches the whole block past the model. */
+	align-items: flex-start;
+	width: var(--cave-embed-width);
+	max-width: 100%;
+	margin: 0 0 1.25rem 1.5rem;
+	display: flex;
+	gap: 8px;
+	font-size: 14px;
+	line-height: 1.35;
+}
+
+/* ---- the place list ---- */
+
+.cave_embed_places {
+	flex: 0 0 var(--cave-embed-places);
+	min-width: 0;
+	background: #f2f3f5;
+	border: 1px solid #d9dce1;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.cave_places_title {
+	padding: 6px 8px;
+	font-weight: 600;
+	background: #e4e7ec;
+	border-bottom: 1px solid #d9dce1;
+	font-size: 13px;
+}
+
+.cave_places_list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	overflow-y: auto;
+	/* The list scrolls rather than setting the height of the whole block: the
+	   model beside it is what decides how tall this is. */
+	flex: 1 1 auto;
+	min-height: 0;
+	max-height: calc(var(--cave-embed-height) - 30px);
+}
+
+.cave_place {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 6px;
+	padding: 4px 8px;
+	border-bottom: 1px solid #e6e8ec;
+}
+
+.cave_place:nth-child(odd) { background: #fafbfc; }
+.cave_place:hover { background: #e8f2fb; }
+
+/* Surveyors' landmark names run from "bivuac" to "-550 m săpătură 2019 - terminus
+   1995-2019". Two lines, then an ellipsis; the full text stays in the title. */
+.cave_place_link {
+	color: #1a6ebd;
+	cursor: pointer;
+	text-decoration: none;
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.cave_place_link:hover { text-decoration: underline; }
+
+.cave_place_link.is_current {
+	font-weight: 700;
+	color: #0b4a86;
+}
+
+.cave_place_depth {
+	flex: 0 0 auto;
+	color: #6b7280;
+	font-variant-numeric: tabular-nums;
+	font-size: 12px;
+}
+
+/* ---- the model ---- */
+
+.cave_embed_model {
+	/* Basis 0, not auto: with `auto` the model's hypothetical size is the width of the
+	   canvas it already holds, so the list plus that exceeds the row and the list wraps
+	   above the model instead of sitting beside it. */
+	flex: 1 1 0;
+	min-width: 0;
+	height: var(--cave-embed-height);
+	background: #000;
+	/* An OUTLINE, deliberately not a border: the viewer decides "am I fullscreen?" by
+	   comparing its container's clientWidth/Height to the window, and a border makes
+	   them differ by 2px forever — the fullscreen button could enter but never exit.
+	   An outline paints the same line without touching layout. */
+	outline: 1px solid #d9dce1;
+	outline-offset: -1px;
+	border-radius: 4px;
+	overflow: hidden;
+	/* The theme's sticky header is ~148px tall; scrollIntoView from the prose links
+	   honours scroll-margin and stops the model below the header, not under it. */
+	scroll-margin-top: 160px;
+}
+
+/* Floats, but must not CLEAR: clearing pushes every following paragraph below the
+   model, which is the whole point of floating it in the first place. Being the same
+   width as the block, it cannot sit beside it, so it lands underneath on its own.
+   The width is repeated rather than taken from a custom property, because this is a
+   SIBLING of .cave_embed and a custom property does not reach across siblings. */
+.cave_embed_caption {
+	float: right;
+	width: min(760px, 62%);
+	max-width: 100%;
+	margin: -0.5rem 0 1.25rem 1.5rem;
+	font-size: 12px;
+	color: #6b7280;
+}
+
+/* ---- links in the prose that drive the model ---- */
+
+a.cv_goto {
+	color: #1a6ebd;
+	cursor: pointer;
+	text-decoration: underline dotted;
+	text-underline-offset: 2px;
+}
+
+a.cv_goto:hover {
+	text-decoration: underline solid;
+	background-color: #e8f2fb;
+}
+
+/* --------------------------------------------------------------------------
+ * The viewer's own stylesheet pins any .cv-container to the whole viewport
+ * below 768px — right for a page that is nothing but a model, wrong for one
+ * embedded in an article, where it covers the article in black. Scoped to this
+ * component so a viewer opened fullscreen on purpose is untouched.
+ * -------------------------------------------------------------------------- */
+@media (max-width: 767px) {
+	.cave_embed_model { scroll-margin-top: 60px; }
+
+	body div.cave_embed_model.cv-container:not(.toggle-fullscreen) {
+		position: relative !important;
+		top: auto !important;
+		bottom: auto !important;
+		left: auto !important;
+		right: auto !important;
+		width: 100% !important;
+		height: var(--cave-embed-height) !important;
+		margin: 0 !important;
+		z-index: auto;
+	}
+
+	/* With the default above no longer fullscreen, the viewer's own fullscreen
+	   control needs to clear the theme's fixed navigation bar (z-index 50001). */
+	body div.toggle-fullscreen {
+		position: fixed !important;
+		inset: 0 !important;
+		width: auto !important;
+		height: auto !important;
+		margin: 0 !important;
+		z-index: 50002;
+	}
+}
+
+@media (max-width: 900px) {
+	.cave_embed {
+		/* Taller than the desktop proportion would suggest, because the toolbar and the
+		   viewer's own dials take a fixed number of pixels whatever the model is: at
+		   320px they left the cave a thin strip down the middle. */
+		--cave-embed-height: 400px;
+		--cave-embed-places: 100%;
+		float: none;
+		width: 100%;
+		margin: 0 0 1.25rem 0;
+		/* Stacked, and ordered explicitly rather than reversed: switches, then the
+		   model, then the list. `column-reverse` put the switches last, away from the
+		   thing they act on. */
+		flex-direction: column;
+	}
+
+	.cave_embed_switches { order: 1; }
+	/* The toolbar's row has the model's place in the order and stands before it in the block,
+	   so stacked it is directly above the model, under the switches and the tabs. */
+	.cave_embed_toolbar  { order: 2; flex: 0 0 auto; }
+	.cave_embed_model    { order: 2; }
+	.cave_embed_places   { order: 3; }
+
+	/*
+	 * THE MODEL'S HEIGHT, and why this rule has to exist.
+	 *
+	 * The row layout gives the model `flex: 1 1 0` so it does not claim the width of
+	 * the canvas it already holds — without that the list wraps above it. But a
+	 * flex-basis is on the MAIN axis, and stacked the main axis is vertical: the same
+	 * declaration sets the model's height basis to zero, and it collapsed to 2px on
+	 * every phone. Here the height is what should govern, so the basis is given back.
+	 */
+	.cave_embed_model {
+		flex: 0 0 auto;
+		height: var(--cave-embed-height);
+	}
+
+	.cave_embed_places {
+		flex: 0 0 auto;
+		max-height: 168px;
+	}
+
+	.cave_embed_caption {
+		float: none;
+		width: 100%;
+		margin: 0 0 1.25rem 0;
+	}
+}
+
+/* The "poze" link on a station that has photographs — same affordance as the full
+   cave page's station list, so a reader can open them without finding the station
+   on the model first. */
+.cave_place_pics {
+	flex: 0 0 auto;
+	color: #1a6ebd;
+	font-size: 12px;
+	text-decoration: none;
+	cursor: zoom-in;
+}
+
+.cave_place_pics:hover {
+	text-decoration: underline;
+	background-color: lightcoral;
+	color: mediumblue;
+}
+
+/* The viewer's toolbar sits over the model; it wraps rather than overflowing, and the
+   component picks a set that fits rather than letting it wrap onto a second row. */
+.cave_embed_model .cv-toolbar {
+	z-index: 30;
+}
+
+
+/* --------------------------------------------------------------------------
+ * The two arrangements the reader chooses between.
+ *
+ * Beside the article by default, because a trip report is read as prose with the
+ * model to hand; full width for looking at the cave itself, where the fifteen-control
+ * toolbar and a long station list both want room.
+ * -------------------------------------------------------------------------- */
+.cave_embed--wide {
+	--cave-embed-width: 100%;
+	--cave-embed-height: 560px;
+	float: none;
+	margin: 0 0 1.25rem 0;
+}
+
+.cave_embed--wide ~ .cave_embed_caption {
+	float: none;
+	width: 100%;
+	margin: 0 0 1.25rem 0;
+}
+
+/* The list hidden gives the model the whole box — which is also what lets the full
+   toolbar fit in the narrower, beside-the-article arrangement. */
+.cave_embed--nolist .cave_embed_places {
+	display: none;
+}
+
+/* Below this the column cannot hold both the block and a readable line of text, so the
+   beside-the-article arrangement stops being one. */
+@media (max-width: 1100px) {
+	.cave_embed {
+		--cave-embed-width: 100%;
+		float: none;
+		margin: 0 0 1.25rem 0;
+	}
+
+	.cave_embed_caption {
+		float: none;
+		width: 100%;
+		margin: 0 0 1.25rem 0;
+	}
+}
+
+/* The surveyors' own named landmarks, which is what a trip report talks in, set apart
+   from the pitch-by-pitch stations that follow them. */
+.cave_place--landmark .cave_place_link {
+	font-weight: 600;
+}
+
+.cave_places_list .cave_place--landmark {
+	background: #eef4fb;
+}
+
+.cave_places_list .cave_place--landmark:hover {
+	background: #e8f2fb;
+}
+
+/* --------------------------------------------------------------------------
+ * The theme clears headings. With a model floated beside the article that ends
+ * the arrangement at the first heading: everything from there down is pushed
+ * below the block, and only the paragraphs above it ever wrap.
+ *
+ * Scoped to siblings that FOLLOW the embed, so a heading anywhere else on the
+ * site keeps the theme's behaviour. A dated heading in a trip journal is a
+ * marker in a flow rather than a section that has to start on clear ground.
+ * -------------------------------------------------------------------------- */
+.cave_embed ~ h1,
+.cave_embed ~ h2,
+.cave_embed ~ h3,
+.cave_embed ~ h4 {
+	clear: none;
+}
+
+/* In the full-width arrangement the block is not floated, so nothing needs to
+   flow around it and the theme's own clearing is left alone. */
+.cave_embed--wide ~ h1,
+.cave_embed--wide ~ h2,
+.cave_embed--wide ~ h3,
+.cave_embed--wide ~ h4 {
+	clear: both;
+}
+
+/* The shading chooser is a <select> in a 36px bar; without a height of its own the
+   theme's form styling leaves its text clipped along the bottom. */
+.cave_embed_model .cv-toolbar select {
+	height: 26px;
+	line-height: 26px;
+	padding: 0 4px;
+	font-size: 12px;
+	box-sizing: border-box;
+}
+
+
+/* --------------------------------------------------------------------------
+ * The toolbar is allowed every control, and a second row if it needs one.
+ *
+ * The bundle caps the bar at half the model's width, which forces a wrap far
+ * earlier than the controls themselves require; letting it use the model's full
+ * width is what keeps fifteen controls on one row on a wide screen, and on two
+ * rather than three when the model is narrow.
+ * -------------------------------------------------------------------------- */
+.cave_embed_model .cv-toolbar {
+	max-width: calc(100% - 16px) !important;
+	width: auto !important;
+	left: 8px !important;
+	right: 8px !important;
+	/* The bundle centres the bar with left:50% and translateX(-50%). Stretching it
+	   between two edges without dropping that transform slides it half its own width
+	   off the left edge, which is exactly what it did. */
+	transform: none !important;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+ * A station's photographs, shown over the model while the pointer rests on that
+ * station in the list.
+ * -------------------------------------------------------------------------- */
+.cave_hover_pictures {
+	position: absolute;
+	/* Down the LEFT edge, one under the other: along the bottom they lay across the
+	   lower passages of the cave, which is where a deep place being pointed at is. In
+	   a column at the side they are over none of it. */
+	left: 8px;
+	top: 50%;
+	transform: translateY(-50%);
+	max-height: calc(100% - 16px);
+	z-index: 25;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-content: flex-start;
+	gap: 3px;
+	justify-content: flex-start;
+	padding: 4px;
+	border-radius: 4px;
+	background: rgba(12, 12, 14, 0.72);
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.15s ease, visibility 0.15s ease;
+	pointer-events: none;      /* never in the way of dragging the model */
+}
+
+.cave_hover_pictures.is_shown {
+	opacity: 1;
+	visibility: visible;
+}
+
+.cave_hover_picture {
+	height: 34px;
+	width: auto;
+	max-width: 60px;
+	object-fit: cover;
+	border-radius: 2px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 640px) {
+	.cave_hover_picture { height: 28px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cave_hover_pictures { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+ * All fifteen controls are kept on every screen, so on a narrow one they have
+ * to wrap. At full size that is four rows — 154px over a 320px model on a
+ * phone, half the model gone. The bundle sizes its controls from a custom
+ * property, so shrinking them there buys the rows back instead of taking
+ * controls away: the same fifteen come down to two rows.
+ * -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+	.cave_embed_model .cv-toolbar {
+		--cv-toolbar-button-size: 28px;
+		gap: 1px;
+	}
+
+	.cave_embed_model .cv-toolbar select {
+		height: 22px;
+		line-height: 22px;
+		font-size: 11px;
+		max-width: 96px;
+	}
+}
+
+@media (max-width: 480px) {
+	.cave_embed_model .cv-toolbar {
+		--cv-toolbar-button-size: 24px;
+	}
+
+	.cave_embed_model .cv-toolbar select {
+		max-width: 76px;
+	}
+}
+
+/* A word to the reader over the model: that the survey is still on its way, or that
+   a link points at a place this survey does not contain. */
+.cave_embed_note {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 40;
+	max-width: 80%;
+	padding: 8px 14px;
+	border-radius: 4px;
+	background: rgba(12, 12, 14, 0.85);
+	color: #f3f4f6;
+	font-size: 14px;
+	text-align: center;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.15s ease, visibility 0.15s ease;
+	pointer-events: none;
+}
+
+.cave_embed_note.is_shown {
+	opacity: 1;
+	visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cave_embed_note { transition: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+ * The viewer's compass and inclination dials are two 80px squares drawn at a
+ * fixed size whatever the model is. Side by side that is 160px, which on a
+ * 4.7-inch phone — where the model is 279px across — is most of the width, laid
+ * over the cave. They carry no class of their own, so they are addressed as the
+ * unclassed children they are; if a later build names them this rule stops
+ * applying and they simply return to full size.
+ *
+ * FORK TODO: give the dials a class in the SilexGIS CaveView fork — any future
+ * class-less div the viewer adds under this container would be shrunk by this rule.
+ * -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+	.cave_embed_model > div:not([class]),
+	.cave_embed_model > div[class=""] {
+		transform: scale(0.62);
+		transform-origin: bottom right;
+	}
+}
+
+/* A phone held sideways has the width but not the height: a 400px model would
+   fill the screen and push the article off it. */
+@media (max-height: 520px) and (orientation: landscape) {
+	.cave_embed {
+		--cave-embed-height: 280px;
+	}
+}
+
+/* The full-width switch must not override the phone height cap: the stacked layouts
+   chose 400px because the toolbar and dials cost fixed pixels, and a switch about
+   WIDTH should not change the height. Appended last to win the source-order fight. */
+@media (max-width: 900px) {
+	.cave_embed--wide {
+		--cave-embed-height: 400px;
+	}
+}
+
+/* --------------------------------------------------------------------------
+ * Links this page made for itself.
+ *
+ * An automatic link should read as a link and behave as one, but an author
+ * looking at their own page deserves to be able to tell which ones they wrote
+ * and which were found for them — hence the lighter underline. Readers are not
+ * meant to notice the difference, so it stays subtle, and hover removes it.
+ * -------------------------------------------------------------------------- */
+.cv_goto[data-autolink] {
+	text-decoration-style: dotted;
+	text-underline-offset: 2px;
+}
+
+.cv_goto[data-autolink]:hover,
+.cv_goto[data-autolink]:focus-visible {
+	text-decoration-style: solid;
+}
+
+/* --------------------------------------------------------------------------
+ * The fly-through's caption.
+ *
+ * Sits over the model rather than beside it, because during a tour the model
+ * is usually fullscreen and there is no "beside". Pointer-events none: a
+ * caption must never be the thing that swallows a click meant for the cave.
+ * -------------------------------------------------------------------------- */
+.cave_embed_caption_overlay {
+	position: absolute;
+	left: 50%;
+	bottom: 18px;
+	transform: translateX(-50%);
+	z-index: 30;
+	max-width: min(92%, 720px);
+	padding: 0.5rem 0.9rem;
+	border-radius: 4px;
+	background: rgba(12, 12, 14, 0.78);
+	color: #f2f3f5;
+	font-size: 15px;
+	line-height: 1.35;
+	text-align: center;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.25s ease;
+}
+
+.cave_embed_caption_overlay.is_shown {
+	opacity: 1;
+}
+
+@media (max-width: 640px) {
+	.cave_embed_caption_overlay {
+		font-size: 13px;
+		bottom: 10px;
+		padding: 0.4rem 0.6rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cave_embed_caption_overlay { transition: none; }
+}
+
+
+/* --------------------------------------------------------------------------
+ * The name of a place reached from a link.
+ *
+ * The viewer's own popup prints the raw station name and its full coordinates
+ * over the place itself. That is the right tool for reading a survey, and it
+ * still appears when a station in the model is clicked — but following a link
+ * from the text is a different act: the reader knows where they wanted to go
+ * and wants to see it, not have it covered.
+ *
+ * Sits just right of the middle because that is where the place is: flying to
+ * a station makes it the camera's target, which is the centre of the view.
+ * -------------------------------------------------------------------------- */
+.cave_embed_place_label {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	z-index: 26;
+	transform: translate(18px, -50%);
+	max-width: min(42%, 260px);
+	padding: 3px 8px;
+	border-radius: 3px;
+	background: rgba(12, 12, 14, 0.7);
+	color: #f4f5f7;
+	font-size: 12px;
+	line-height: 1.3;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.18s ease;
+}
+
+.cave_embed_place_label.is_shown {
+	opacity: 1;
+}
+
+.cave_embed_place_depth {
+	margin-left: 6px;
+	opacity: 0.72;
+	font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+	.cave_embed_place_label { font-size: 11px; transform: translate(12px, -50%); }
+	.cave_hover_pictures { max-width: 64%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cave_embed_place_label { transition: none; }
+}
+
+/* --------------------------------------------------------------------------
+ * The viewer's own strip of station photographs.
+ *
+ * It normally places itself beside the station, deliberately: the strip lies
+ * between the station and wherever the pointer travels next, so the thumbnails
+ * can be reached before the hover ends. That is right when a station in the
+ * model is hovered, and wrong when a place has been reached from a link — the
+ * reader is looking at the place, and the photographs sit on top of it.
+ *
+ * Anchored to the bottom-left corner instead. `!important` is needed and is not
+ * laziness: the viewer re-places this strip with inline styles on every frame
+ * it is displayed, and an inline style beats an ordinary rule.
+ *
+ * The same corner as .cave_hover_pictures on purpose. One is driven by hovering
+ * a station in the model and the other by hovering a row in the list, and a
+ * single pointer cannot do both at once.
+ * -------------------------------------------------------------------------- */
+/* A column down the model's left edge, about its middle, at half the size the thumbnails
+   had along the bottom: over none of the cave, and clear of the toolbar along the top and
+   of the dials and the scale along the bottom. The viewer does this by itself from
+   2.9.0-slx.18; said here as well so that an older build is laid out the same way. */
+.cave_embed_model .cv-media-strip {
+	--cv-media-thumbnail-size: 32px;
+	left: 8px !important;
+	right: auto !important;
+	top: 50% !important;
+	bottom: auto !important;
+	transform: translateY(-50%);
+	flex-direction: column !important;
+	flex-wrap: wrap !important;
+	align-content: flex-start;
+	max-width: none !important;
+	max-height: calc(100% - 16px) !important;
+}
+
+/* A caption under a thumbnail this small is two letters and an ellipsis; it is the
+   thumbnail's title, and the lightbox says it whole. */
+.cave_embed_model .cv-media-strip > div > div { display: none !important; }
+
+@media (pointer: coarse) {
+	.cave_embed_model .cv-media-strip { --cv-media-thumbnail-size: 44px; }
+}
+
+/* ==========================================================================
+ * The cave's trips: the two list surfaces, the party, and the replay strip.
+ *
+ * Two surfaces show the same list, because a reader wants it in two different
+ * situations: beside the article while reading it, and inside the model while
+ * looking at the model. Each has a switch of its own, so neither is imposed.
+ * ========================================================================== */
+
+.cave_trips {
+	font-size: 13px;
+	line-height: 1.35;
+}
+
+/* The list the component makes for itself takes a row of its own under the model,
+   beside nothing — the block is a flex row and a third item would otherwise squeeze
+   the two that were there first. */
+.cave_embed > .cave_trips {
+	flex: 1 1 100%;
+	margin-top: 6px;
+}
+
+/* Hidden with the place list, because both are the reader's own choice about how much
+   of the page is furniture. */
+.cave_embed > .cave_trips[hidden] { display: none; }
+
+.cave_trips_title {
+	font-weight: 600;
+	margin: 0 0 .35rem;
+}
+
+.cave_trips_list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.cave_trip {
+	padding: .3rem .4rem;
+	border-radius: 4px;
+	border-left: 3px solid transparent;
+}
+
+.cave_trip + .cave_trip { margin-top: 2px; }
+
+.cave_trip--live { border-left-color: #d64545; }
+
+/* Closed, but still being followed: the present tense, and not a party underground. */
+.cave_trip--recent { border-left-color: #b8860b; }
+
+.cave_trip.is_current {
+	background: rgba(0, 0, 0, .06);
+	border-left-color: #2b6cb0;
+}
+
+.cave_trip_link {
+	display: block;
+	text-decoration: none;
+	font-weight: 500;
+}
+
+.cave_trip_meta {
+	display: flex;
+	gap: .5rem;
+	opacity: .75;
+	font-size: 12px;
+}
+
+/* An expedition's name is written by a club and can be long. The row it sits in is as
+   narrow as a phone, and the panel this list lives in has already been too short once —
+   so the name gives way rather than pushing the date and the standing off the row. */
+.cave_trip_expedition {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	min-width: 0;
+}
+
+/* A trip with nothing recorded but entries and exits cannot be played, and says so
+   rather than offering a player that would open empty. */
+.cave_trip.is_unplayable .cave_trip_link {
+	opacity: .55;
+	cursor: default;
+}
+
+.cave_trip_note,
+.cave_trips_empty,
+.cave_trips_more,
+.cave_party_note {
+	font-size: 12px;
+	opacity: .7;
+}
+
+/* The page's address names a trip that is not on it. Above the rows, and not faded like
+   the notes under them: it is the answer to the link the reader arrived by. */
+.cave_trips_notice {
+	font-size: 12px;
+	margin: 0 0 .35rem;
+}
+
+/* The installation is not answering and the list is the site's copy: said once, small and muted,
+   so that it informs without reading as an error about the trips themselves. */
+.cave_trips_notice.cave_trips_cache {
+	font-size: 11px;
+	opacity: .75;
+	font-style: italic;
+}
+
+.cave_trips_party { margin-top: .6rem; }
+
+.cave_party_title {
+	font-weight: 600;
+	margin-bottom: .25rem;
+}
+
+.cave_party_list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.cave_party_member {
+	display: flex;
+	align-items: baseline;
+	gap: .35rem;
+	padding: .15rem 0;
+}
+
+.cave_party_member.is_followed { font-weight: 600; }
+
+.cave_party_dot {
+	flex: 0 0 auto;
+	width: 9px;
+	height: 9px;
+	border-radius: 50%;
+	/* The same colour as this person's marker and their road on the model, which is
+	   the only thing joining a name in a list to a dot on a cave. */
+	box-shadow: 0 0 0 1px rgba(0, 0, 0, .25);
+}
+
+.cave_party_name { text-decoration: none; }
+
+.cave_party_where,
+.cave_party_standing {
+	font-size: 12px;
+	opacity: .7;
+}
+
+/* The three standings summed up, above the party: how many are underground, out, and
+   not yet in. */
+.cave_party_standings {
+	font-size: 12px;
+	opacity: .8;
+	margin-bottom: .25rem;
+}
+
+/* The name of the place somebody is at, where the cave declares one for the station. */
+.cave_party_place {
+	font-size: 12px;
+	opacity: .85;
+}
+
+/* Which trip this party is, beside whoever is followed in it, for somebody who is on
+   several of the page's trips. */
+.cave_party_trip {
+	font-size: 12px;
+	font-weight: 400;
+	opacity: .85;
+}
+
+/* A standing is a word first and a tint second: the word is what a screen reader and a
+   phone in the sun get, the tint only helps a glance down the list. The tints are kept
+   faint enough to read on the dark panel inside the model too. */
+.cave_party_standing--underground { color: #2b6cb0; }
+.cave_party_standing--out { color: #2f855a; }
+.cave_party_standing--unheard { font-style: italic; }
+.cave_trips--in_viewer .cave_party_standing--underground { color: #9ecbff; }
+.cave_trips--in_viewer .cave_party_standing--out { color: #9ae6b4; }
+
+/* ---- the list inside the model ------------------------------------------ */
+
+.cave_trips_button {
+	position: absolute;
+	right: 8px;
+	/* `top` is set by the component from the toolbar's measured height: everything else
+	   over the model is drawn into the canvas and cannot be measured — the dials in the
+	   bottom-right corner, the depth legend down the right-hand edge, the round controls
+	   down the left — so the one free strip is the one under the toolbar, and the toolbar
+	   is a real element that can be asked how tall it has become. */
+	top: 48px;
+	z-index: 5;
+	padding: 6px 10px;
+	min-height: 32px;
+	border: 0;
+	border-radius: 4px;
+	background: rgba(20, 20, 20, .82);
+	color: #fff;
+	font: inherit;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.cave_trips_button.is_open { background: #2b6cb0; }
+
+.cave_trips--in_viewer {
+	position: absolute;
+	right: 8px;
+	top: 86px;
+	/* Over what else is drawn across the model's lower half: the photographs of a replay
+	   (24), the place list's picture strip (25) and the place label (26). Left at 5 the
+	   list lay under them, and a press on one of its rows opened a photograph instead of
+	   choosing the trip — seen first on a phone, where the list is a sheet along the
+	   bottom, and then on a desk once a page played every trip as it opened. Still under
+	   the toolbar and the tour's caption (both 30) and the note (40). */
+	z-index: 27;
+	display: none;
+	width: min(280px, calc(100% - 16px));
+	/* A floor only: the real limit is measured by the component against the box. */
+	max-height: calc(100% - 60px);
+	overflow-y: auto;
+	/* A list that scrolls has to look as though it does, or a reader who cannot see the
+	   rest concludes there is no rest. */
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+	padding: .5rem .6rem;
+	border-radius: 6px;
+	background: rgba(20, 20, 20, .9);
+	color: #f2f2f2;
+}
+
+.cave_trips--in_viewer.is_open { display: block; }
+.cave_trips--in_viewer a { color: #9ecbff; }
+.cave_trips--in_viewer .cave_trip.is_current { background: rgba(255, 255, 255, .12); }
+
+/* ---- the replay strip ---------------------------------------------------- */
+
+.cave_trips_bar {
+	flex: 1 1 100%;
+	margin-top: 6px;
+	padding: .4rem .5rem;
+	border-radius: 4px;
+	background: rgba(0, 0, 0, .06);
+	font-size: 13px;
+}
+
+/* Said permanently and not optionally: the same drawing shows a party underground
+   now and a party from years ago, and a reader has to be told which. */
+.cave_replay_says {
+	font-weight: 600;
+	margin-bottom: .3rem;
+}
+
+.cave_replay_controls {
+	display: flex;
+	align-items: center;
+	gap: .35rem;
+	flex-wrap: wrap;
+}
+
+.cave_replay_controls button,
+.cave_replay_controls select {
+	font: inherit;
+	font-size: 12px;
+	/* A finger needs a target this size; the strip is used on a telephone at least as
+	   often as at a desk. */
+	min-height: 32px;
+	min-width: 32px;
+	padding: 0 .5rem;
+	border: 1px solid rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	background: #fff;
+	cursor: pointer;
+}
+
+.cave_replay_range {
+	flex: 1 1 140px;
+	min-width: 120px;
+	/* The scrubber is used with a thumb on a telephone at least as often as with a
+	   pointer at a desk, and the browsers' own slider thumb is about twelve pixels — a
+	   target a finger misses. Twenty-four pixels, on both engines' spelling of the
+	   thumb, which needs the native drawing switched off on the input and the thumb
+	   both; the track is drawn here instead, since switching the drawing off takes it
+	   too. The input is tall enough to hold the thumb, so its box is the target.
+	   `pan-y` leaves a vertical swipe over the strip to the page, so a reader can still
+	   scroll past it, and gives the horizontal one to the scrubber. */
+	touch-action: pan-y;
+	-webkit-appearance: none;
+	appearance: none;
+	height: 28px;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	cursor: pointer;
+}
+
+.cave_replay_range::-webkit-slider-runnable-track {
+	height: 4px;
+	border-radius: 2px;
+	background: rgba(0, 0, 0, .25);
+}
+
+.cave_replay_range::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 24px;
+	height: 24px;
+	/* Centred on a 4px track: half the thumb less half the track. */
+	margin-top: -10px;
+	border-radius: 50%;
+	border: 2px solid #fff;
+	background: #2b6cb0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .35);
+}
+
+.cave_replay_range::-moz-range-track {
+	height: 4px;
+	border-radius: 2px;
+	background: rgba(0, 0, 0, .25);
+}
+
+.cave_replay_range::-moz-range-thumb {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	border: 2px solid #fff;
+	background: #2b6cb0;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .35);
+}
+
+.cave_replay_range:focus-visible {
+	outline: 2px solid #2b6cb0;
+	outline-offset: 2px;
+}
+
+.cave_replay_clock {
+	font-variant-numeric: tabular-nums;
+	min-width: 3.2em;
+	text-align: center;
+}
+
+/* Whom the view keeps up with. A club names its teams and its people at whatever length
+   it likes; the chooser gives way rather than pushing the clock off the strip. */
+.cave_replay_follow {
+	max-width: 12em;
+}
+
+.cave_replay_now { margin-left: auto; }
+
+@media (max-width: 900px) {
+	.cave_replay_now {
+		margin-left: 0;
+		flex: 1 1 100%;
+	}
+}
+
+/* ---- the list inside the model, on a phone --------------------------------- */
+
+/* A sheet along the bottom of the model, across its width, instead of a panel 280px wide
+   against the right edge: on a phone the panel left a strip of model beside it too narrow
+   to use and rows inside it too narrow to read. The component measures the toolbar and
+   writes the panel's `top` and `max-height` inline, for the panel-under-the-toolbar
+   layout; the sheet is anchored at the bottom instead, so those two are overridden here
+   the same way the viewer's media strip is. The measured `max-height` would otherwise
+   reach the toolbar; a sheet stops at little over half the model, so that the party it
+   is about stays in view above it. */
+@media (max-width: 640px) {
+	.cave_trips--in_viewer {
+		top: auto !important;
+		bottom: 8px;
+		left: 8px;
+		right: 8px;
+		width: auto;
+		/* Over what else is anchored in the corner this sheet now lies across: the
+		   viewer's picture strip (9), whose thumbnails take the pointer, and the place
+		   list's (25) and the place label (26), which only cover. Left at the panel's 5
+		   the sheet lay under them, and a press on a row in its bottom-left opened a
+		   photograph instead of choosing the trip. Still under the toolbar and the tour's
+		   caption (both 30) and the note (40). */
+		z-index: 27;
+		/* Padding included, so that the 55% is the sheet as seen. */
+		box-sizing: border-box;
+		max-height: 55% !important;
+		border-radius: 8px;
+	}
+}
+
+/* ==========================================================================
+ * What shares the model's box: the row of tabs, the views chosen by them, the
+ * line saying what drew the model, and where each sits in the block.
+ * ========================================================================== */
+
+/* The block is a wrapping row, and what was added to it over time was added at the
+   end: the replay strip came after the trips list, so with thirty trips listed the
+   strip that plays one of them was a screen below the model it plays on. The order is
+   therefore said here rather than left to the order things were made in: switches,
+   tabs, the row the lists and the model share, the replay strip, the credit line, the
+   trips list. */
+.cave_embed_switches { order: -3; }
+.cave_embed_tabs { order: -2; }
+
+/* The viewer's toolbar, laid out above the model while the model is shown at less than
+   its large size: a row of the block's own, across it, so that the bar covers none of
+   the cave. Empty — the bar over the model — it is not there at all. It comes before the
+   list of trips in the block and has that list's place in the order, so it stands above
+   the row the list and the model share. */
+.cave_embed_toolbar {
+	order: -1;
+	flex: 0 0 100%;
+	min-width: 0;
+	display: none;
+	border-radius: 4px;
+	overflow: hidden;
+}
+
+.cave_embed_toolbar.cv-toolbar-strip-on { display: block; }
+
+/* Taken away with the model when another view has its place. The rule above outweighs the
+   browser's own for `hidden`, and the strip stayed on the page over the map and the figures
+   whenever the bar was laid out in it. */
+.cave_embed_toolbar[hidden],
+.cave_embed_toolbar.cv-toolbar-strip-on[hidden] { display: none; }
+
+/* The bar's strip belongs to the model alone: as wide as the model and directly on top of
+   it, not across the lists and panels that share the row. The component places it from
+   the model's own box (left, top, width) and says how tall it has come out
+   (--cave-toolbar-height); the model stands that much lower and is that much shorter, so
+   the two together are as tall as the model was and the lists beside them stay level. */
+.cave_embed--toolbar_above { position: relative; }
+
+.cave_embed--toolbar_above > .cave_embed_toolbar.cv-toolbar-strip-on {
+	position: absolute;
+	flex: none;
+	z-index: 2;
+	border-radius: 4px 4px 0 0;
+}
+
+/* (Named with the block's own class as well: the rule that makes the model as tall as the
+   block says, at the end of this sheet, has the weight of this one without it and comes later.) */
+.cave_embed.cave_embed--toolbar_above > .cave_embed_model.cave_embed_model {
+	margin-top: var(--cave-toolbar-height, 0px);
+	height: calc(var(--cave-embed-height) - var(--cave-toolbar-height, 0px));
+	border-radius: 0 0 4px 4px;
+}
+
+/* Stacked, the model has nothing beside it to stay level with, and keeps its height: the
+   strip is added above it. The rule that pins the model on a narrow screen says `margin: 0`
+   and its own height with `!important`, so this is said with the weight to be heard there. */
+@media (max-width: 900px) {
+	.cave_embed--toolbar_above > .cave_embed_model.cave_embed_model,
+	body div.cave_embed.cave_embed--toolbar_above > div.cave_embed_model.cave_embed_model.cv-container:not(.toggle-fullscreen) {
+		margin-top: var(--cave-toolbar-height, 0px) !important;
+		height: var(--cave-embed-height) !important;
+	}
+}
+
+/* The bar in its row is sized as it was while it stood over the model. Those sizes were
+   written for `.cave_embed_model .cv-toolbar`, and the bar that moved out of the model
+   left them behind: on a telephone it came back at the size the viewer gives a finger,
+   44px a control, three rows of them above a model 400px tall. Smaller than over the
+   model, where anything: in a row of its own it covers nothing, but every row it takes is
+   a row less of cave. */
+.cave_embed_toolbar .cv-toolbar {
+	--cv-toolbar-button-size: 28px;
+	--cv-toolbar-gap: 1px;
+	--cv-toolbar-padding: 2px;
+}
+
+.cave_embed_toolbar .cv-toolbar svg { width: 18px; height: 18px; }
+
+.cave_embed_toolbar .cv-toolbar select {
+	height: 24px;
+	line-height: 24px;
+	padding: 0 4px;
+	font-size: 12px;
+	box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+	.cave_embed_toolbar .cv-toolbar { --cv-toolbar-button-size: 26px; }
+	.cave_embed_toolbar .cv-toolbar svg { width: 16px; height: 16px; }
+	.cave_embed_toolbar .cv-toolbar select { height: 22px; line-height: 22px; font-size: 11px; max-width: 96px; }
+}
+
+@media (max-width: 480px) {
+	.cave_embed_toolbar .cv-toolbar { --cv-toolbar-button-size: 24px; }
+	.cave_embed_toolbar .cv-toolbar svg { width: 15px; height: 15px; }
+	.cave_embed_toolbar .cv-toolbar select { max-width: 76px; }
+}
+.cave_trips_bar { order: 1; }
+.cave_embed_credit { order: 2; }
+.cave_embed > .cave_trips { order: 3; }
+
+.cave_embed_tabs {
+	flex: 0 0 100%;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 2px;
+	margin: 0;
+	border-bottom: 1px solid #d9dce1;
+}
+
+.cave_embed_tab {
+	font: inherit;
+	font-size: 13px;
+	min-height: 32px;
+	padding: 4px 12px;
+	border: 1px solid transparent;
+	border-bottom: 0;
+	border-radius: 4px 4px 0 0;
+	background: transparent;
+	color: #4b5563;
+	cursor: pointer;
+}
+
+.cave_embed_tab:hover { background: #f2f3f5; }
+
+.cave_embed_tab.is_current {
+	background: #fff;
+	border-color: #d9dce1;
+	color: #111827;
+	font-weight: 600;
+	/* Over the bar's own line, so the open tab reads as joined to what is under it. */
+	margin-bottom: -1px;
+	padding-bottom: 5px;
+}
+
+/* A view in the model's place takes the model's place exactly: the same share of the
+   row and the same height, so choosing a tab moves nothing else on the page. */
+.cave_embed_pane {
+	flex: 1 1 0;
+	min-width: 0;
+	height: var(--cave-embed-height);
+	box-sizing: border-box;
+	overflow: auto;
+	background: #fff;
+	outline: 1px solid #d9dce1;
+	outline-offset: -1px;
+	border-radius: 4px;
+	scroll-margin-top: 160px;
+}
+
+.cave_embed_pane[hidden],
+.cave_embed_model[hidden] { display: none; }
+
+.cave_embed_credit {
+	flex: 1 1 100%;
+	font-size: 11px;
+	line-height: 1.3;
+	color: #6b7280;
+	text-align: right;
+}
+
+.cave_embed_credit a { color: inherit; text-decoration: underline; }
+
+/* ---- the trips list beside the model: one line a trip, and a list that scrolls ---- */
+
+/* One line a trip: what it is called, who was on it, and its days, small. What else is
+   said of a trip — how it stands, its camp, its party one by one — is said under the row
+   of the trip that is open, and of no other: an expedition's thirty trips took sixty
+   lines of a page that is an article first. */
+.cave_trip_row {
+	display: flex;
+	align-items: baseline;
+	column-gap: .5rem;
+}
+
+.cave_trip_link { flex: 0 0 auto; font-weight: 600; }
+
+/* The party gives way: the title and the days are what a row is found by. */
+.cave_trip_people {
+	flex: 1 1 auto;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 12px;
+	opacity: .85;
+}
+
+.cave_trip_when {
+	flex: 0 0 auto;
+	margin-left: auto;
+	font-size: 11px;
+	opacity: .7;
+	white-space: nowrap;
+	font-variant-numeric: tabular-nums;
+}
+
+.cave_trip_note { display: block; }
+
+.cave_trip--all .cave_trip_link { font-style: italic; }
+
+.cave_trip_details {
+	margin: .3rem 0 .15rem;
+	padding: .35rem .5rem;
+	border-left: 2px solid #2b6cb0;
+	background: rgba(43, 108, 176, .07);
+	border-radius: 0 4px 4px 0;
+}
+
+.cave_trips--in_viewer .cave_trip_details { background: rgba(255, 255, 255, .08); border-left-color: #9ecbff; }
+
+.cave_trip_facts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .15rem .6rem;
+	font-size: 12px;
+	opacity: .85;
+}
+
+.cave_trip_actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-top: .35rem;
+}
+
+.cave_trip_actions:empty { display: none; }
+
+.cave_trip_action {
+	font: inherit;
+	font-size: 12px;
+	min-height: 28px;
+	padding: 0 .6rem;
+	border: 1px solid rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	background: #fff;
+	color: #1f2937;
+	cursor: pointer;
+}
+
+.cave_trip_action:disabled { opacity: .5; cursor: default; }
+
+.cave_trip_details .cave_trips_party { margin-top: .4rem; }
+
+/* Seven rows or so, and the rest by scrolling: the list is something to pick from, and
+   the article it sits in should not have to be scrolled past it. A list that scrolls
+   has to look as though it does. */
+.cave_embed > .cave_trips .cave_trips_list {
+	max-height: 12.5rem;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+}
+
+.cave_trips_title {
+	display: flex;
+	align-items: center;
+	gap: .4rem;
+}
+
+.cave_trips_total {
+	font-weight: 400;
+	font-size: 12px;
+	opacity: .7;
+}
+
+.cave_trips_fold {
+	margin-left: auto;
+	min-width: 28px;
+	min-height: 28px;
+	padding: 0 .4rem;
+	border: 1px solid rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	background: #fff;
+	font: inherit;
+	font-size: 12px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.cave_trips.is_folded .cave_trips_title { margin-bottom: 0; }
+
+/* The list as a column of its own, left of the place list and the model, for a reader
+   with the width for it: as tall as the model and scrolling inside itself, so the model
+   stays where it is while a trip is picked. Below the width where the block stops
+   sitting beside the article there is no room for a third column, and the switch
+   changes nothing. */
+@media (min-width: 1101px) {
+	/* Three columns — the trips, the places, the model — do not fit in the part of the
+	   article's width the block has beside the text: measured on the journal page, the
+	   model was left 404px. So with the trips beside it the block takes the full width
+	   and the text starts under it, as in the full-width arrangement, at the model's
+	   ordinary height. */
+	.cave_embed--trips_left {
+		--cave-embed-width: 100%;
+		/* What the model has been on this page all along — see the rule on the model's
+		   height, at the end of this sheet — and now the list beside it as well. */
+		--cave-embed-height: 600px;
+		float: none;
+		margin: 0 0 1.25rem 0;
+	}
+
+	.cave_embed--trips_left > .cave_trips {
+		order: -1;
+		flex: 0 0 290px;
+		box-sizing: border-box;
+		height: var(--cave-embed-height);
+		margin-top: 0;
+		padding: 6px 8px;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		scrollbar-width: thin;
+		background: #f2f3f5;
+		border: 1px solid #d9dce1;
+		border-radius: 4px;
+	}
+
+	/* The column scrolls; a second scrolling box inside it would be two scrollbars. */
+	.cave_embed--trips_left > .cave_trips .cave_trips_list {
+		max-height: none;
+		overflow: visible;
+	}
+
+	/* Folded, the column would be a tall empty box with a title in it. */
+	.cave_embed--trips_left > .cave_trips.is_folded {
+		height: auto;
+		align-self: flex-start;
+	}
+
+	.cave_embed--trips_left ~ .cave_embed_caption { float: none; width: 100%; margin: 0 0 1.25rem 0; }
+}
+
+/* Stacked, the order is said again in full: the model, what plays on it, what drew it,
+   and then the two lists. Left to the numbers above, the strip and the trips list —
+   which carried no number while the three that did were numbered from one — came out
+   above the switches. */
+@media (max-width: 900px) {
+	.cave_embed_switches { order: 1; }
+	.cave_embed_tabs     { order: 1; }
+	.cave_embed_toolbar  { order: 2; flex: 0 0 auto; }
+	.cave_embed_model    { order: 2; }
+	.cave_embed_pane     { order: 2; flex: 0 0 auto; height: var(--cave-embed-height); }
+	.cave_trips_bar      { order: 3; }
+	.cave_embed_credit   { order: 4; text-align: left; }
+	.cave_embed_places   { order: 5; }
+	.cave_embed > .cave_trips { order: 6; }
+}
+
+/* ==========================================================================
+ * The journal's own sections: a chip per trip under each day's heading, the
+ * expedition's figures, the scanned maps, and the photographs of a replay.
+ * ========================================================================== */
+
+/* ---- a chip per trip, under a day's heading ---- */
+
+/* On one line where they fit, wrapping where they do not; small, since they sit
+   between a heading and the paragraph it heads and belong to neither. */
+.cave_day_trips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px 6px;
+	margin: -.35rem 0 .8rem;
+	font-size: 12px;
+	line-height: 1.3;
+}
+
+.cave_day_trips[hidden] { display: none; }
+
+.cave_day_trip {
+	display: inline-flex;
+	align-items: baseline;
+	gap: .4em;
+	max-width: 100%;
+	padding: 2px 9px;
+	border: 1px solid #c9d6e6;
+	border-radius: 999px;
+	background: #f1f6fc;
+	color: #1f4f82;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.cave_day_trip:hover,
+.cave_day_trip:focus-visible {
+	background: #dfecfa;
+	border-color: #2b6cb0;
+	text-decoration: none;
+}
+
+.cave_day_trip[aria-disabled="true"] { opacity: .55; cursor: default; }
+
+/* A party underground now. */
+.cave_day_trip--followed { border-color: #d64545; }
+
+.cave_day_trip_title { font-weight: 600; white-space: nowrap; }
+
+.cave_day_trip_party {
+	color: #4b5563;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	min-width: 0;
+}
+
+/* ---- the figures ---- */
+
+.cave_stats {
+	font-size: 13px;
+	line-height: 1.4;
+	color: #1f2937;
+}
+
+/* The panel in the article: a section of its own, clear of the floated model. */
+.cave_stats[data-stats] {
+	clear: both;
+	margin: 1.5rem 0;
+	padding: 12px 14px;
+	border: 1px solid #d9dce1;
+	border-radius: 6px;
+	background: #fafbfc;
+}
+
+.cave_stats--tab { padding: 10px 12px; }
+
+.cave_stats_head {
+	display: flex;
+	align-items: center;
+	gap: .6rem;
+	margin-bottom: .4rem;
+}
+
+.cave_stats_title { font-size: 15px; font-weight: 600; }
+
+.cave_stats_toggle {
+	margin-left: auto;
+	min-height: 30px;
+	padding: 0 .7rem;
+	border: 1px solid rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	background: #fff;
+	font: inherit;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.cave_stats.is_hidden .cave_stats_head { margin-bottom: 0; }
+
+.cave_stats_totals { margin-bottom: .6rem; color: #4b5563; }
+
+/* What the club says about its own figures: read before them, so it stands above them. */
+.cave_stats_notice {
+	margin: 0 0 .6rem;
+	padding: 6px 10px;
+	border-left: 3px solid #d9822b;
+	background: #fdf6ec;
+	color: #5f4320;
+	font-size: 12px;
+}
+
+.cave_stats_views {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: .7rem;
+}
+
+.cave_stats_view,
+.cave_stats_pick select {
+	font: inherit;
+	font-size: 12px;
+	min-height: 30px;
+	padding: 0 .6rem;
+	border: 1px solid rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	background: #fff;
+	cursor: pointer;
+}
+
+.cave_stats_view.is_current,
+.cave_stats_pick.is_current select {
+	background: #2b6cb0;
+	border-color: #2b6cb0;
+	color: #fff;
+}
+
+.cave_stats_pick { display: inline-flex; align-items: center; gap: .3rem; font-size: 12px; }
+
+/* As many charts beside each other as there is room for: one column in the model's
+   box and on a phone, two or three across the article on a desk. */
+.cave_stats_body {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+	gap: 14px 22px;
+	align-items: start;
+}
+
+.cave_stats_subject,
+.cave_stats_section,
+.cave_stats_tiles,
+.cave_stats_trips,
+.cave_stats_chart--wide { grid-column: 1 / -1; }
+
+.cave_stats_subject { font-size: 15px; font-weight: 600; }
+.cave_stats_section { font-weight: 600; margin-top: .3rem; }
+
+.cave_stats_tiles {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+	gap: 8px;
+}
+
+.cave_stats_tile {
+	padding: 8px 10px;
+	border: 1px solid #e3e6ea;
+	border-radius: 6px;
+	background: #fff;
+}
+
+.cave_stats_tile_value { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.cave_stats_tile_label { font-size: 11px; color: #6b7280; }
+
+.cave_stats_chart_title { font-weight: 600; margin-bottom: .3rem; }
+
+.cave_stats_bars { list-style: none; margin: 0; padding: 0; }
+
+.cave_stats_bar {
+	display: grid;
+	grid-template-columns: minmax(70px, 34%) 1fr auto;
+	align-items: center;
+	gap: 6px;
+	padding: 1px 0;
+	margin: 0;
+}
+
+.cave_stats_bar_label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-decoration: none;
+}
+
+a.cave_stats_bar_label:hover { text-decoration: underline; }
+
+.cave_stats_bar_rail {
+	display: flex;
+	height: 12px;
+	border-radius: 3px;
+	background: #e9edf2;
+	overflow: hidden;
+}
+
+.cave_stats_bar_fill { display: block; height: 100%; background: #2b6cb0; }
+.cave_stats_bar_fill--a { background: #2b6cb0; }
+.cave_stats_bar_fill--b { background: #d9822b; }
+
+.cave_stats_bar_value {
+	min-width: 4.5em;
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+.cave_stats_key { margin-top: .25rem; font-size: 11px; color: #6b7280; }
+.cave_stats_key_item { margin-right: .9rem; white-space: nowrap; }
+
+.cave_stats_key_item .cave_stats_bar_fill {
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	border-radius: 2px;
+	vertical-align: -1px;
+}
+
+.cave_stats_columns {
+	display: flex;
+	align-items: flex-end;
+	gap: 3px;
+	height: 130px;
+	padding-bottom: 16px;
+	overflow-x: auto;
+}
+
+.cave_stats_column {
+	position: relative;
+	flex: 1 1 0;
+	min-width: 22px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.cave_stats_column_bar { width: 100%; border-radius: 3px 3px 0 0; background: #2b6cb0; }
+.cave_stats_column_value { font-size: 10px; color: #4b5563; font-variant-numeric: tabular-nums; }
+
+.cave_stats_column_day {
+	position: absolute;
+	bottom: -15px;
+	font-size: 10px;
+	color: #6b7280;
+	white-space: nowrap;
+}
+
+.cave_stats_profile { display: block; width: 100%; height: auto; max-height: 240px; }
+.cave_stats_grid { stroke: #d9dce1; stroke-width: 1; }
+.cave_stats_grid--day { stroke-dasharray: 2 3; }
+.cave_stats_axis { font-size: 10px; fill: #6b7280; }
+.cave_stats_line { fill: none; stroke: #2b6cb0; stroke-width: 1.6; stroke-linejoin: round; }
+.cave_stats_dot { fill: #2b6cb0; }
+
+.cave_stats_trips { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; font-size: 12px; }
+.cave_stats_trips_title { font-weight: 600; margin-right: .2rem; }
+
+.cave_stats_note { margin-top: .6rem; font-size: 11px; color: #6b7280; }
+
+/* ---- a scanned map in the model's place ---- */
+
+.cave_map {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	background: #f4f4f1;
+}
+
+.cave_map[hidden] { display: none; }
+
+.cave_map_bar {
+	flex: 0 0 auto;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 8px;
+	background: #fff;
+	border-bottom: 1px solid #d9dce1;
+	font-size: 12px;
+}
+
+.cave_map_name { font-weight: 600; }
+
+.cave_map_sheet,
+.cave_map_zoom {
+	font: inherit;
+	font-size: 12px;
+	min-height: 28px;
+	min-width: 28px;
+	padding: 0 .5rem;
+	border: 1px solid rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	background: #fff;
+	cursor: pointer;
+}
+
+.cave_map_off { margin-left: auto; color: #6b7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.cave_map_frame {
+	flex: 1 1 0;
+	min-height: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	touch-action: none;
+}
+
+.cave_map_sheet_box {
+	position: relative;
+	flex: 0 0 auto;
+	transform-origin: center center;
+	--cave-map-scale: 1;
+}
+
+.cave_map_image { display: block; width: 100%; height: 100%; user-select: none; }
+
+.cave_map_over,
+.cave_map_marks {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+}
+
+.cave_map_road { fill: none; stroke-width: 3; stroke-linejoin: round; stroke-linecap: round; opacity: .85; }
+
+/* What is written on the sheet is read at one size however far in the sheet is. */
+.cave_map_point,
+.cave_map_caver {
+	position: absolute;
+	transform: translate(-50%, -50%) scale(calc(1 / var(--cave-map-scale)));
+}
+
+.cave_map_point {
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: rgba(43, 108, 176, .45);
+}
+
+.cave_map_point--named { background: #2b6cb0; }
+
+.cave_map_point.is_lit {
+	width: 12px;
+	height: 12px;
+	background: #ffcc00;
+	box-shadow: 0 0 0 3px rgba(255, 204, 0, .4), 0 0 0 1px #7a5c00;
+}
+
+.cave_map_point_label {
+	position: absolute;
+	left: 8px;
+	top: -6px;
+	padding: 0 3px;
+	border-radius: 2px;
+	background: rgba(255, 255, 255, .8);
+	font-size: 10px;
+	white-space: nowrap;
+	color: #1f2937;
+}
+
+.cave_map_caver { z-index: 2; }
+
+.cave_map_caver_dot {
+	display: block;
+	width: 14px;
+	height: 14px;
+	border: 2px solid #fff;
+	border-radius: 50%;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+}
+
+.cave_map_caver_name {
+	position: absolute;
+	left: 16px;
+	top: -3px;
+	padding: 0 4px;
+	border-radius: 3px;
+	background: rgba(20, 20, 20, .82);
+	color: #fff;
+	font-size: 11px;
+	white-space: nowrap;
+}
+
+/* ---- photographs of a replay, over whichever drawing is open ---- */
+
+.cave_replay_photos {
+	position: absolute;
+	/* A column down the left edge, about its middle, like the pictures of a station: over
+	   none of the cave. */
+	left: 8px;
+	top: 50%;
+	transform: translateY(-50%);
+	/* Under the list inside the model (27), which a row of it must be pressed through. */
+	z-index: 24;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	max-height: calc(100% - 16px);
+	padding: 4px;
+	border-radius: 6px;
+	background: rgba(20, 20, 20, .78);
+	overflow-y: auto;
+	scrollbar-width: thin;
+	animation: cave_replay_photos_in .35s ease-out;
+}
+
+.cave_map .cave_replay_photos { position: absolute; }
+.cave_map { position: relative; }
+
+.cave_replay_photo { position: relative; flex: 0 0 auto; display: block; line-height: 0; }
+
+.cave_replay_photo img {
+	display: block;
+	height: 42px;
+	width: auto;
+	max-width: 75px;
+	object-fit: cover;
+	border-radius: 3px;
+}
+
+.cave_replay_photo_label {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 1px 4px;
+	background: rgba(0, 0, 0, .6);
+	color: #fff;
+	font-size: 10px;
+	line-height: 1.3;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+@keyframes cave_replay_photos_in {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cave_replay_photos { animation: none; }
+}
+
+@media (max-width: 640px) {
+	.cave_replay_photo img { height: 34px; max-width: 60px; }
+}
+
+/* A switch that only does something beside a wide model is not offered beside a narrow one. */
+@media (max-width: 1100px) {
+	.cave_switch--wide_only { display: none; }
+}
+
+/* ---- the log: every report as a table, in the model's place or beside it ---- */
+
+.cave_log {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	font-size: 12px;
+	line-height: 1.35;
+}
+
+.cave_log[hidden] { display: none; }
+
+.cave_log_bar {
+	flex: 0 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	padding: 5px 8px;
+	border-bottom: 1px solid #d9dce1;
+	background: #fff;
+}
+
+.cave_log_filter {
+	font: inherit;
+	font-size: 12px;
+	min-height: 28px;
+	max-width: 14em;
+	padding: 0 .4rem;
+	border: 1px solid rgba(0, 0, 0, .2);
+	border-radius: 4px;
+	background: #fff;
+}
+
+.cave_log_count { margin-left: auto; color: #6b7280; white-space: nowrap; }
+
+.cave_log_scroll {
+	flex: 1 1 0;
+	min-height: 0;
+	overflow: auto;
+	overscroll-behavior: contain;
+}
+
+.cave_log_table { width: 100%; border-collapse: collapse; margin: 0; }
+
+/* The theme gives every table header an all but transparent background, and a header
+   that stays put while the rows pass under it then has them showing through its words.
+   So the colour is said with the weight it takes to be the one drawn, and the table's
+   cells are kept apart: with collapsed borders a sticky cell leaves its lines behind. */
+.cave_log_table { border-collapse: separate; border-spacing: 0; }
+
+.cave_log .cave_log_table thead th {
+	position: sticky;
+	top: 0;
+	z-index: 3;
+	padding: 4px 6px;
+	background: #f2f3f5 !important;
+	background-clip: padding-box;
+	box-shadow: 0 1px 0 #d9dce1;
+	border-bottom: 1px solid #d9dce1;
+	text-align: left;
+	font-weight: 600;
+	white-space: nowrap;
+}
+
+.cave_log_table td {
+	padding: 3px 6px;
+	border: 0;
+	border-bottom: 1px solid #eef0f3;
+	vertical-align: top;
+}
+
+.cave_log_when,
+.cave_log_depth { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.cave_log_depth { text-align: right; }
+.cave_log_note { min-width: 12em; }
+
+.cave_log_row { cursor: pointer; }
+.cave_log_row:hover,
+.cave_log_row:focus-visible { background: #e8f2fb; outline: 0; }
+.cave_log_row.is_now { background: #fff4cc; }
+
+/* Beside the model: the two share what the row has left, the model keeping the larger
+   part, and the block takes the full width of the article — two views and two lists do
+   not fit in the part of it the block has beside the text. The place list gives way for
+   as long as this lasts; it is a tab away. Stacked, where the block stacks, the log is
+   a box of its own under the model. */
+.cave_embed--split {
+	--cave-embed-width: 100%;
+	float: none;
+	margin: 0 0 1.25rem 0;
+}
+
+.cave_embed--split .cave_embed_places { display: none; }
+.cave_embed--split .cave_embed_model { flex: 1.15 1 0; }
+.cave_embed--split .cave_embed_pane--beside:not([hidden]) { flex: 1 1 0; }
+/* Beside a scanned map the same way: the map has the model's share, the log the other. */
+.cave_embed--split .cave_embed_pane:not([hidden]):not(.cave_embed_pane--beside) { flex: 1.15 1 0; }
+
+@media (max-width: 900px) {
+	.cave_embed--split .cave_embed_pane--beside:not([hidden]) { flex: 0 0 auto; height: 320px; order: 3; }
+	.cave_embed--split .cave_embed_pane:not([hidden]):not(.cave_embed_pane--beside) { flex: 0 0 auto; }
+}
+
+/* ---- over the model while a replay is on it: the instant, and who is underground ---- */
+
+.cave_replay_overlay {
+	position: absolute;
+	/* The bottom left corner, above the viewer's scale bar, which is drawn into the canvas
+	   along the bottom edge from 45px in and cannot be moved: its line and its figure take
+	   the lowest forty pixels. In the middle of the bottom edge it stood over the deepest
+	   passages of a cave drawn from the side. */
+	left: 8px;
+	bottom: 46px;
+	/* Under the photographs of a replay (24) and the list inside the model (27): it says
+	   what they are about and gives way to both. */
+	z-index: 23;
+	max-width: min(60%, 460px);
+	padding: 5px 10px;
+	border-radius: 4px;
+	background: rgba(12, 14, 18, .72);
+	color: #fff;
+	font-size: 12px;
+	line-height: 1.35;
+	text-align: left;
+	/* Read, never pressed: the model under it is turned and zoomed through it. */
+	pointer-events: none;
+}
+
+.cave_replay_overlay[hidden] { display: none; }
+.cave_replay_overlay_when { font-weight: 600; font-variant-numeric: tabular-nums; }
+.cave_replay_overlay_team { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cave_replay_overlay_team b { font-weight: 600; color: #ffe08a; }
+.cave_replay_overlay_none,
+.cave_replay_overlay_more { opacity: .8; }
+
+@media (max-width: 600px) {
+	.cave_replay_overlay { max-width: calc(100% - 70px); font-size: 11px; padding: 4px 8px; }
+}
+
+/* With the whole screen to itself there is room to be read from across a room. */
+.cave_embed--fs .cave_replay_overlay { font-size: 15px; padding: 8px 14px; left: 12px; bottom: 50px; }
+
+/* ---- the two buttons that give the block the screen ---- */
+
+.cave_replay_fs {
+	min-width: 32px;
+	min-height: 32px;
+	padding: 2px 6px;
+	border: 1px solid #c9ced6;
+	border-radius: 4px;
+	background: #fff;
+	color: #1f2937;
+	font: inherit;
+	font-size: 15px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.cave_replay_fs:hover { background: #eef2f7; }
+.cave_replay_fs.is_on { background: #2b6cb0; border-color: #2b6cb0; color: #fff; }
+
+/* ---- the block on the whole screen ----
+ *
+ * The block is the element the browser shows, in both modes; what differs is what of it
+ * is left on. `--fs_pseudo` is the same thing where the browser gives no element the
+ * screen: the block fixed over the page.
+ */
+.cave_embed--fs {
+	--cave-embed-width: 100%;
+	float: none;
+	width: 100vw !important;
+	max-width: none !important;
+	height: 100vh;
+	height: 100dvh;
+	margin: 0 !important;
+	box-sizing: border-box;
+	overflow: auto;
+	background: #fff;
+}
+
+.cave_embed--fs_pseudo {
+	position: fixed;
+	inset: 0;
+	z-index: 2147483000;
+}
+
+html.cave_embed_fs_lock,
+html.cave_embed_fs_lock body { overflow: hidden !important; }
+
+/* The whole block: as on the page, with the screen's width, its row of model and lists as
+   tall as what the rows above and below leave (the component measures that). */
+.cave_embed--fs_all {
+	padding: 10px 14px;
+	align-content: flex-start;
+}
+
+/* The model and what drives it: everything else is off, the model takes what the strip
+   under it leaves. */
+.cave_embed--fs_model {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	padding: 0;
+	overflow: hidden;
+	background: #000;
+}
+
+.cave_embed--fs_model > * { display: none !important; }
+
+/* Named twice over on purpose: the rule that pins the model's height on a narrow screen
+   is `body div.cave_embed_model.cv-container:not(.toggle-fullscreen)`, with `!important`,
+   and this has to be the one that is heard. */
+.cave_embed--fs_model > .cave_embed_model,
+body div.cave_embed.cave_embed--fs_model > div.cave_embed_model.cave_embed_model.cave_embed_model {
+	display: block !important;
+	flex: 1 1 auto;
+	order: 0;
+	width: 100% !important;
+	max-width: none !important;
+	height: auto !important;
+	min-height: 0;
+	margin: 0 !important;
+	border: 0;
+}
+
+.cave_embed--fs_model > .cave_trips_bar {
+	display: block !important;
+	flex: 0 0 auto;
+	order: 1;
+	width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 6px 10px;
+	background: #f4f5f7;
+}
+
+/* ---- the log as a box of the article, where the page put one ---- */
+
+.cave_log--panel {
+	clear: both;
+	margin: 1.5rem 0;
+	padding: 12px 14px;
+	border: 1px solid #d9dce1;
+	border-radius: 6px;
+	background: #fff;
+	font-size: 13px;
+	min-width: 0;
+}
+
+.cave_log--panel[hidden] { display: none; }
+.cave_log_title { margin: 0 0 .5rem; font-size: 1.05rem; font-weight: 600; }
+
+/* Its own height and its own scroll: seven hundred rows are not a part of the article to
+   be scrolled past. */
+.cave_log--panel { display: block; height: auto; overflow: visible; }
+
+.cave_log--panel .cave_log_scroll {
+	/* Not the tab's share of a pane of fixed height: as tall as its rows, to a limit. */
+	flex: none;
+	height: auto;
+	max-height: 520px;
+	overflow: auto;
+	border: 1px solid #e6e8ec;
+	border-radius: 4px;
+}
+
+/* ---- two boxes side by side where there is room, one under the other where not ----
+ *
+ * What [silexgis_cave_columns] wraps: the figures and the log at the end of an article. Each
+ * column is at least 380px, so on a telephone — and in a narrow article — they stack.
+ */
+.cave_columns {
+	clear: both;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr));
+	gap: 16px;
+	align-items: start;
+	margin: 1.5rem 0;
+}
+
+.cave_columns > * { min-width: 0; margin: 0 !important; }
+/* A paragraph the editor wrapped a shortcode in, or left empty between two. */
+.cave_columns > p:empty,
+.cave_columns > br { display: none; }
+
+/* ---- the model is as tall as the block says ----
+ *
+ * The viewer's own stylesheet gives its container a height of 600px, with a selector of
+ * the same weight as the one this sheet sizes the model with, and is loaded after this
+ * sheet: so the model was 600px whatever --cave-embed-height said — beside a list 460px
+ * tall on the page, and beside lists the height of the screen when the block was given
+ * the whole of it. Said here with the weight to be heard.
+ */
+.cave_embed > .cave_embed_model.cave_embed_model { height: var(--cave-embed-height); }
+
+/* The model with its strip on the whole screen: the bar's strip is part of what drives it,
+   and there it is a row of the column the screen is laid out in — in the flow, across the
+   screen, wherever the component last placed it on the page. */
+.cave_embed--fs_model > .cave_embed_toolbar.cv-toolbar-strip-on {
+	display: block !important;
+	position: static !important;
+	width: auto !important;
+	flex: 0 0 auto;
+	order: -1;
+	border-radius: 0;
+}
+
+/* The whole block on the whole screen: the model takes every pixel of height the rows
+   above and below leave, whatever the page gave it — less its own bar's strip. */
+.cave_embed--fs_all > .cave_embed_model.cave_embed_model { height: var(--cave-embed-height) !important; }
+.cave_embed--fs_all.cave_embed--toolbar_above > .cave_embed_model.cave_embed_model {
+	height: calc(var(--cave-embed-height) - var(--cave-toolbar-height, 0px)) !important;
+}
+
+/* ---- a list that scrolls looks like one ----
+ *
+ * Two things, because no one of them reaches every reader. The scrollbar is drawn at its
+ * ordinary width and in a colour that shows against the box, wherever the browser draws
+ * scrollbars at all — the thin grey ones these boxes had were easy to miss. And at each
+ * edge beyond which the box has more, a small arrow: on a telephone the scrollbar is there
+ * only while a finger moves it, and a box showing six rows of thirty said nothing of the
+ * rest. The component marks the box (`has_above`, `has_below`); the arrows are drawn here,
+ * and are stuck to the edges of the box, taking no room in what it holds and no press.
+ */
+.cave_places_list,
+.cave_trips--in_viewer,
+.cave_embed > .cave_trips .cave_trips_list,
+.cave_embed--trips_left > .cave_trips,
+.cave_log_scroll,
+.cave_embed_pane.cave_stats {
+	scrollbar-width: auto;
+	scrollbar-color: #6b7686 #e3e6ea;
+}
+
+.cave_trips--in_viewer { scrollbar-color: #c3cad4 rgba(255, 255, 255, .12); }
+
+.cave_scroll_hint::before,
+.cave_scroll_hint::after {
+	content: "";
+	display: block;
+	position: sticky;
+	left: 0;
+	z-index: 4;
+	height: 22px;
+	opacity: 0;
+	pointer-events: none;
+	background: no-repeat center / 22px 22px;
+	transition: opacity .15s ease;
+}
+
+.cave_scroll_hint::before {
+	top: var(--cave-scroll-top, 2px);
+	margin-bottom: -22px;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%231f2937' fill-opacity='.82'/%3E%3Cpath d='M7 14l5-5 5 5' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.cave_scroll_hint::after {
+	bottom: 2px;
+	margin-top: -22px;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='11' fill='%231f2937' fill-opacity='.82'/%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Seen through, on purpose: at full strength the dark disc was the heaviest thing in a list
+   of plain text, and what it has to say is only that there is more. */
+.cave_scroll_hint.has_above::before,
+.cave_scroll_hint.has_below::after { opacity: .42; }
+
+/* Under the table's own headings, which stay at the top of the box. */
+.cave_log_scroll { --cave-scroll-top: 30px; }
+
+@media (prefers-reduced-motion: reduce) {
+	.cave_scroll_hint::before,
+	.cave_scroll_hint::after { transition: none; }
+}
+
+/* ---- the reader's stop, the language, the narrowed log, the estimated places on a sheet ---- */
+
+/* The play button, for a moment, when a press elsewhere stopped the replay: it is the button that
+   changed, and the eye is taken to it. */
+@keyframes cave-replay-pulse {
+	0%   { box-shadow: 0 0 0 0 rgba(37, 99, 235, .55); transform: scale(1); }
+	35%  { box-shadow: 0 0 0 6px rgba(37, 99, 235, .25); transform: scale(1.12); }
+	100% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); transform: scale(1); }
+}
+.cave_replay_play.is_pulse { animation: cave-replay-pulse 1.3s ease-out 1; }
+@media (prefers-reduced-motion: reduce) {
+	.cave_replay_play.is_pulse { animation: none; outline: 2px solid #2563eb; }
+}
+
+/* The page's language: two small letters at the end of the row of switches. */
+.cave_embed_switches .cave_lang { margin-left: auto; order: 99; display: inline-flex; gap: 2px; }
+.cave_lang_choice {
+	font: inherit;
+	font-size: 11px;
+	line-height: 1;
+	padding: 3px 5px;
+	border: 1px solid #d1d5db;
+	border-radius: 3px;
+	background: transparent;
+	color: #6b7280;
+	cursor: pointer;
+}
+.cave_lang_choice.is_current { background: #374151; border-color: #374151; color: #fff; cursor: default; }
+
+/* Beside the model the log's trip, place and state are cut to part of their width (the widths
+   are worked out per table), each whole in its title; the button beside the count undoes it. */
+.cave_embed_pane.cave_log:not(.cave_log--fit) .cave_log_table .cave_log_trip  { max-width: var(--cave-log-trip, 10ch); }
+.cave_embed_pane.cave_log:not(.cave_log--fit) .cave_log_table .cave_log_place { max-width: var(--cave-log-place, 10ch); }
+.cave_embed_pane.cave_log:not(.cave_log--fit) .cave_log_table .cave_log_state { max-width: var(--cave-log-state, 12ch); }
+.cave_embed_pane.cave_log:not(.cave_log--fit) .cave_log_table :is(.cave_log_trip, .cave_log_place, .cave_log_state) {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.cave_log_fit {
+	font: inherit;
+	font-size: 12px;
+	line-height: 1;
+	padding: 2px 6px;
+	border: 1px solid #d1d5db;
+	border-radius: 3px;
+	background: #fff;
+	cursor: pointer;
+}
+.cave_log_fit[aria-pressed="true"] { background: #e5e7eb; }
+
+/* The first report of what was just selected, beside the moment the replay is at. */
+.cave_log_row.is_selected td { box-shadow: inset 0 1px 0 #2563eb, inset 0 -1px 0 #2563eb; }
+
+/* A person, or a lit place, where the sheet has no point and its other points place them. */
+.cave_map_caver--estimated .cave_map_caver_dot { outline: 1px dashed rgba(17, 24, 39, .7); outline-offset: 1px; }
+.cave_map_point--estimated { opacity: .9; }
+
+/* ---- the component's controls in the light scheme they are drawn for ----
+   The site's theme declares that its pages may be shown light or dark
+   (`<meta name="color-scheme" content="light dark">`), and on a device set to dark the
+   browser draws every native control in its dark colours — a button's text near white —
+   whatever the page around it is. The replay's step and play buttons are white, so on a
+   telephone in dark mode their arrows came out light grey on white, measured as
+   rgb(238, 238, 238) on rgb(255, 255, 255), while the article around them stayed white.
+   The component is drawn light, so it says so, and its own controls name their text colour
+   as well, for a theme that sets one on every button. */
+.cave_embed,
+.cave_log--panel,
+.cave_stats[data-stats],
+.cave_day_trips,
+.cave_gallery_holder { color-scheme: light; }
+
+.cave_replay_controls button,
+.cave_replay_controls select,
+.cave_map_sheet,
+.cave_map_zoom,
+.cave_log_filter,
+.cave_log_fit,
+.cave_stats_toggle,
+.cave_stats_view,
+.cave_stats_pick select,
+.cave_trip_action {
+	color: #1f2937;
+	-webkit-text-fill-color: currentColor;
+}
+
+/* ---- the whole block on the whole screen, which only a wide screen has room for ----
+   Laid out to a telephone's screen the block is its stacked column squeezed into one
+   screen: the model a strip, the lists under it cut off, nothing scrolling. The model on
+   the whole screen with the replay under it is the one that reads there. */
+@media (max-width: 900px), (pointer: coarse) and (max-height: 520px) {
+	.cave_replay_fs[data-fs="all"] { display: none; }
+}

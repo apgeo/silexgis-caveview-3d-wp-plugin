@@ -1,0 +1,14 @@
+{
+	"container": "cave_model",
+	"placeList": "cave_places",
+	"placeListTitle": { "en": "Places in the cave", "ro": "Locuri din peșteră" },
+	"data": { "group": "example" },
+	"view": "VIEW_PLAN",
+	"toolbar": { "placement": "top" },
+	"trips": {
+		"list": { "aside": true },
+		"timeZone": "UTC",
+		"log": {},
+		"stats": { "tab": true }
+	}
+}

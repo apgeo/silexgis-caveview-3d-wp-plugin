@@ -1,0 +1,885 @@
+# The strings of Silex Cave Embed's admin screens, for translating into another language.
+# Written by tools/build-translations.py from the plugin's PHP; do not edit by hand.
+# This file is distributed under the same licence as the plugin (GPL-3.0-or-later).
+msgid ""
+msgstr ""
+"Project-Id-Version: Silex Cave Embed 1.0.0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Domain: silexgis-caveview-3d\n"
+
+#. Description of the plugin
+#: silexgis-caveview-3d.php:5
+msgid "A cave's 3D survey model on a page — its places, photographs and the trips a SilexGIS installation publishes — driven by configuration."
+msgstr ""
+
+#. translators: 1: number of published pages carrying a model, 2: the shortcode, 3: the REST namespace
+#: silexgis-caveview-3d.php:179
+#, php-format
+msgid "Deactivating SilexGIS CaveView 3D stops the 3D model on %1$d published page (its styles and scripts no longer load, and the [%2$s] shortcode shows as text) and the published trips' proxy (the %3$s routes answer 404). Deactivate the plugin?"
+msgid_plural "Deactivating SilexGIS CaveView 3D stops the 3D models on %1$d published pages (their styles and scripts no longer load, and the [%2$s] shortcode shows as text) and the published trips' proxy (the %3$s routes answer 404). Deactivate the plugin?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: silexgis-caveview-3d.php:214
+msgid "the plugin is active but loads nothing, because another plugin — a second copy of this one, or an older site-specific plugin with the same functions — is already serving the 3D models. Deactivate one of the two."
+msgstr ""
+
+#: includes/admin-autolink.php:54
+msgid "3D models — automatic links"
+msgstr ""
+
+#: includes/admin-autolink.php:55
+msgid "3D models (caves)"
+msgstr ""
+
+#: includes/admin-autolink.php:63 includes/settings.php:292 includes/trips-proxy.php:1292
+msgid "You do not have the necessary permission."
+msgstr ""
+
+#. translators: %d: how many rows of the table were saved
+#: includes/admin-autolink.php:118
+#, php-format
+msgid "Saved: %d entry."
+msgid_plural "Saved: %d entries."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin-autolink.php:127 includes/settings.php:332
+msgid "Automatic links to the 3D model"
+msgstr ""
+
+#: includes/admin-autolink.php:131
+msgid "The text of the pages that hold a 3D model is read through as they are shown, and the names of the places it recognises become links that take the camera there. Nothing in the page's content is changed — the links are added only as it is shown."
+msgstr ""
+
+#: includes/admin-autolink.php:141
+msgid "Sources"
+msgstr ""
+
+#: includes/admin-autolink.php:143
+msgid "Enabled"
+msgstr ""
+
+#: includes/admin-autolink.php:144
+msgid "Make links automatically"
+msgstr ""
+
+#: includes/admin-autolink.php:146
+msgid "From the survey"
+msgstr ""
+
+#: includes/admin-autolink.php:147
+msgid "The names the surveyors gave (the stations' comments)"
+msgstr ""
+
+#: includes/admin-autolink.php:148
+msgid "They need no upkeep: they come from the survey file."
+msgstr ""
+
+#: includes/admin-autolink.php:150
+msgid "From the list below"
+msgstr ""
+
+#: includes/admin-autolink.php:151
+msgid "The names entered by hand"
+msgstr ""
+
+#: includes/admin-autolink.php:153
+msgid "Depths"
+msgstr ""
+
+#: includes/admin-autolink.php:154
+msgid "Mentions such as “−815 m”"
+msgstr ""
+
+#: includes/admin-autolink.php:155
+msgid "Only with a sign: “815 m of rope” does not become a link."
+msgstr ""
+
+#: includes/admin-autolink.php:159
+msgid "Names"
+msgstr ""
+
+#. translators: 1: the separator, 2: the name of the Cave column, 3: an example file name
+#: includes/admin-autolink.php:164
+#, php-format
+msgid "A station can have several names, separated by %1$s. %2$s is the name of the survey file (e.g. %3$s); left empty, the row applies to every cave. A name used by two different stations is ignored — an ambiguous link would be a riddle, not a help."
+msgstr ""
+
+#: includes/admin-autolink.php:166 includes/admin-autolink.php:174 includes/settings.php:268
+msgid "Cave"
+msgstr ""
+
+#: includes/admin-autolink.php:175
+msgid "Station"
+msgstr ""
+
+#. translators: %s: the separator
+#: includes/admin-autolink.php:178
+#, php-format
+msgid "Names (separated by %s)"
+msgstr ""
+
+#: includes/admin-autolink.php:180
+msgid "Depth"
+msgstr ""
+
+#: includes/admin-autolink.php:181
+msgid "Active"
+msgstr ""
+
+#: includes/admin-autolink.php:187
+msgid "all"
+msgstr ""
+
+#: includes/admin-autolink.php:192
+msgid "Delete the row"
+msgstr ""
+
+#: includes/admin-autolink.php:197
+msgid "+ New row"
+msgstr ""
+
+#: includes/admin-autolink.php:199 includes/settings.php:315 includes/trips-proxy.php:1458
+msgid "Save"
+msgstr ""
+
+#: includes/admin-autolink.php:201
+msgid "Export / import"
+msgstr ""
+
+#: includes/admin-autolink.php:203
+msgid "The same list as JSON, for moving it elsewhere (into SilexGIS, for example, for pages that are not WordPress)."
+msgstr ""
+
+#: includes/meta-box.php:135
+msgid "a model's configuration can be written only by an account with the unfiltered_html capability (on a single site: an Editor or an Administrator)"
+msgstr ""
+
+#: includes/meta-box.php:142
+msgid "it must be a text holding a JSON object"
+msgstr ""
+
+#: includes/meta-box.php:175
+msgid "3D model (SilexCaveEmbed)"
+msgstr ""
+
+#: includes/meta-box.php:206
+msgid "The refused text is the one below; the page goes on using the configuration saved before."
+msgstr ""
+
+#: includes/meta-box.php:210
+msgid "The configuration saved on this page is not valid JSON and is ignored when the page is shown:"
+msgstr ""
+
+#. translators: %s: the refused fields and the rule they break
+#: includes/meta-box.php:217
+#, php-format
+msgid "The configuration saved on this page is not printed, because %s."
+msgstr ""
+
+#: includes/meta-box.php:222
+msgid "The configuration of the model on this page — the JSON object SilexCaveEmbed.create() receives: the cave, the places, the photographs and the published trips. The page also needs the [silexgis_cave] shortcode in its content, which puts the model's container on the page."
+msgstr ""
+
+#: includes/meta-box.php:223
+msgid "Left empty, the page looks for its configuration in the pages/<slug>.js file beside the component; the shortcode's config=\"...\" attribute names such a file explicitly and comes first."
+msgstr ""
+
+#. translators: %s: the fields that hold an address
+#: includes/meta-box.php:227
+#, php-format
+msgid "The addresses in the configuration (%s) must be paths on this site: they begin with a single “/” and contain no host or scheme (https://…), no “//”, no “\\” and no “..”."
+msgstr ""
+
+#: includes/meta-box.php:231
+msgid "The three ways, described (README, “Configuring a page”)"
+msgstr ""
+
+#: includes/meta-box.php:295
+msgid "it is not valid JSON: "
+msgstr ""
+
+#: includes/meta-box.php:298
+msgid "it must be a JSON object ({ … })"
+msgstr ""
+
+#: includes/meta-box.php:302
+msgid "these fields break the rule for addresses above: "
+msgstr ""
+
+#. translators: %d: how many fields the configuration has at its top level
+#: includes/meta-box.php:318
+#, php-format
+msgid "Valid JSON. Top-level fields: %d."
+msgstr ""
+
+#. translators: %s: why the configuration was refused
+#: includes/meta-box.php:344 includes/meta-box.php:403
+#, php-format
+msgid "The 3D model's configuration was not saved, because %s. The page keeps the configuration it had."
+msgstr ""
+
+#. translators: %s: where the text stops being JSON
+#: includes/meta-box.php:391
+#, php-format
+msgid "The 3D model's configuration was not saved, because it is not valid JSON — %s. The page keeps the configuration it had."
+msgstr ""
+
+#: includes/meta-box.php:468
+msgid "3D model (SilexCaveEmbed):"
+msgstr ""
+
+#: includes/meta-box.php:471
+msgid "Open the page"
+msgstr ""
+
+#: includes/settings.php:13 includes/settings.php:14 includes/settings.php:296
+msgid "3D models"
+msgstr ""
+
+#: includes/settings.php:53
+msgid "How the model looks"
+msgstr ""
+
+#: includes/settings.php:55
+msgid "Default language of the pages"
+msgstr ""
+
+#. translators: %s: the language "the site's language" comes to on this site now, e.g. "English"
+#: includes/settings.php:61
+#, php-format
+msgid "The site's language (now %s)"
+msgstr ""
+
+#: includes/settings.php:67
+msgid "The language a page with a model opens in — its buttons, lists, figures and journal — when the page names no other in its configuration. A reader can choose another language on the page, with the small buttons at the end of the row of switches; their choice is kept in their browser."
+msgstr ""
+
+#. translators: %s: the languages the pages offer, e.g. "Română, English"
+#: includes/settings.php:70
+#, php-format
+msgid "“The site's language” is the Site Language set under Settings → General when the pages offer it (%s), and English otherwise."
+msgstr ""
+
+#: includes/settings.php:75
+msgid "Size of station names"
+msgstr ""
+
+#: includes/settings.php:79
+msgid "How large the model writes the names of its stations and their comments, as a part of the viewer's own size: 1 is its size, 0.6 six tenths of it. It applies to every page with a model; a page whose configuration says “labelScale” keeps its own value. On very dense screens the writing never shrinks below what can still be read."
+msgstr ""
+
+#: includes/settings.php:101
+msgid "The site's copy of the trips"
+msgstr ""
+
+#: includes/settings.php:103
+msgid "Keep a copy of the installation's data on this site"
+msgstr ""
+
+#: includes/settings.php:107
+msgid "Write the trips and the cave — the survey file, the named places, the photographs — to this site every five minutes, and draw the pages from that copy."
+msgstr ""
+
+#: includes/settings.php:109
+msgid "Switched off, no copy is written and the one already on the server is left as it is but no longer used: the pages read the trips from the installation through this site as they are asked, and the cave through this site's own addresses, which ask the installation in turn. Nothing of the cave or its trips is then shown while the installation is not answering."
+msgstr ""
+
+#: includes/settings.php:113
+msgid "A note when a page is drawn from the copy"
+msgstr ""
+
+#: includes/settings.php:117
+msgid "Say on the page, in one small line, when the SilexGIS installation is not answering and the trips are shown from the site's copy, and how old the copy is."
+msgstr ""
+
+#: includes/settings.php:122
+msgid "Where the code is"
+msgstr ""
+
+#: includes/settings.php:123
+msgid "Left empty, a field means the copy the plugin ships, which is updated with the plugin. A directory named instead is a path from the root of the site, begins and ends with “/” and contains no spaces; it is read from the disk under the WordPress directory, so it serves only a WordPress installed at the root of its host. A value that does not look like that is refused, and the one before it stays. So is a path where the code is not on the server: the files go there first, then the path is changed."
+msgstr ""
+
+#: includes/settings.php:126
+msgid "Components directory"
+msgstr ""
+
+#: includes/settings.php:128
+msgid "The component, with css/, js/ and pages/ (the pages' configuration files). Empty: the plugin's own, with the pages' files under the uploads directory."
+msgstr ""
+
+#: includes/settings.php:132
+msgid "CaveView directory"
+msgstr ""
+
+#. translators: %s: the version of the viewer build the plugin ships
+#: includes/settings.php:135
+#, php-format
+msgid "A build of the CaveView.js fork the component is written against. Empty: the build the plugin ships, %s."
+msgstr ""
+
+#. translators: %s: the refused value
+#: includes/settings.php:172
+#, php-format
+msgid "The path “%s” was refused: it must begin and end with “/”, with no spaces and no “..”. The previous value was kept."
+msgstr ""
+
+#. translators: 1: the refused value, 2: the file that was looked for
+#: includes/settings.php:184
+#, php-format
+msgid "The path “%1$s” was refused: %2$s is not on the server, so the pages with a model would be left without their code. Put the files there first. The previous value was kept."
+msgstr ""
+
+#. translators: 1: the refused value, 2: the smallest value accepted, 3: the largest
+#: includes/settings.php:207
+#, php-format
+msgid "The size “%1$s” was refused: it must be a number between %2$s and %3$s. The previous value was kept."
+msgstr ""
+
+#. translators: %s: the directory of the copy the plugin ships
+#: includes/settings.php:228
+#, php-format
+msgid "The plugin's own copy, %s."
+msgstr ""
+
+#. translators: %s: a file path
+#: includes/settings.php:238
+#, php-format
+msgid "%s is on the server."
+msgstr ""
+
+#. translators: %s: a file path
+#: includes/settings.php:244
+#, php-format
+msgid "%s is not on the server: the pages with a model will stay empty until the code is put there or the path is corrected."
+msgstr ""
+
+#: includes/settings.php:256
+msgid "A page reads the finished trips from a file the site writes by itself from the SilexGIS installation every five minutes: a change made on the installation reaches the page within that time at most. When the installation does not answer, the file stays as it was and the page is shown from it."
+msgstr ""
+
+#: includes/settings.php:258
+msgid "The site keeps no copy at the moment: the pages read the installation as they are asked."
+msgstr ""
+
+#: includes/settings.php:263
+msgid "There are no links to published trips yet, so there is no copy either."
+msgstr ""
+
+#: includes/settings.php:266
+msgid "Cave (group of links)"
+msgstr ""
+
+#: includes/settings.php:267
+msgid "Last try"
+msgstr ""
+
+#: includes/settings.php:267
+msgid "Last written"
+msgstr ""
+
+#: includes/settings.php:268
+msgid "Trips"
+msgstr ""
+
+#: includes/settings.php:271
+msgid "never"
+msgstr ""
+
+#. translators: %s: what went wrong, e.g. "unreachable" or "HTTP 503"
+#: includes/settings.php:275
+#, php-format
+msgid "failed: %s"
+msgstr ""
+
+#: includes/settings.php:279
+msgid "not written"
+msgstr ""
+
+#: includes/settings.php:279
+msgid "written, with no survey file"
+msgstr ""
+
+#: includes/settings.php:281
+msgid "survey fetched at the last writing"
+msgstr ""
+
+#: includes/settings.php:283
+msgid "the survey could not be fetched at the last writing"
+msgstr ""
+
+#: includes/settings.php:299
+msgid "The plugin puts a cave's 3D model on a page, with its places, its photographs and its published trips. It loads the model's scripts and styles only on the pages that carry a model, and hands each page its configuration."
+msgstr ""
+
+#. translators: 1: copies written, 2: copies asked for
+#: includes/settings.php:306
+#, php-format
+msgid "The copy of the trips: %1$s of %2$s written just now."
+msgstr ""
+
+#: includes/settings.php:323
+msgid "Write the copy of the trips now"
+msgstr ""
+
+#: includes/settings.php:329
+msgid "The other screens"
+msgstr ""
+
+#: includes/settings.php:333
+msgid "the table of names that turns the names of places in the text into links to the model."
+msgstr ""
+
+#: includes/settings.php:336 includes/trips-proxy.php:1096 includes/trips-proxy.php:1379
+msgid "Published trips (SilexGIS)"
+msgstr ""
+
+#: includes/settings.php:337
+msgid "the installation's address and the published trips' links, kept on the server and never in the page."
+msgstr ""
+
+#: includes/settings.php:341
+msgid "How a page gets a model"
+msgstr ""
+
+#: includes/settings.php:343
+msgid "The page's content carries the [silexgis_cave] shortcode, which puts the model's container on the page (with the attributes id, places, places_id, height, width, class, config; a caption is written between [silexgis_cave] and [/silexgis_cave])."
+msgstr ""
+
+#: includes/settings.php:344
+msgid "The model's configuration — the cave, the places, the photographs, the trips — comes from one of three places, in this order: the file named by the shortcode's config=\"...\" attribute; the “3D model (SilexCaveEmbed)” box on the page, holding the configuration as JSON; a file pages/<slug>.js, named after the page's address, in the pages' directory (see “Where the code is”)."
+msgstr ""
+
+#: includes/settings.php:345
+msgid "The plugin loads the styles and scripts itself, at the foot of the page; the content must hold no script or link tag."
+msgstr ""
+
+#: includes/settings.php:357
+msgid "the name may hold only small letters without diacritics, digits, “-” and “_”, must begin with a letter or a digit, and may be 40 characters long at most."
+msgstr ""
+
+#: includes/settings.php:359
+msgid "this server's PHP cannot read zip archives (its zip extension is missing); the host can switch it on."
+msgstr ""
+
+#: includes/settings.php:361
+msgid "the file is not a zip archive that can be read."
+msgstr ""
+
+#: includes/settings.php:363
+msgid "the archive holds a file a data set may not hold: a path that leads out of the set or is more than two folders deep, or a kind of file other than JSON, a survey (.lox, .3d, .plt) or a picture (.jpg, .png, .webp)."
+msgstr ""
+
+#. translators: %s: a size, e.g. "200 MB"
+#: includes/settings.php:366
+#, php-format
+msgid "the archive unpacks to more than %s."
+msgstr ""
+
+#: includes/settings.php:368
+msgid "the archive has no cave.json of a data set's form at its root."
+msgstr ""
+
+#. translators: %s: a size, e.g. "8 MB"
+#: includes/settings.php:371
+#, php-format
+msgid "no archive arrived: none was chosen, or it is larger than this server accepts (%s)."
+msgstr ""
+
+#: includes/settings.php:373
+msgid "the data set could not be written on the server; the set of that name, if there was one, is as it was."
+msgstr ""
+
+#: includes/settings.php:382
+msgid "Data sets"
+msgstr ""
+
+#. translators: 1: how a page names a data set in its configuration, 2: the files a data set holds
+#: includes/settings.php:387
+#, php-format
+msgid "A data set is a cave and its trips as plain files — %2$s — which a page draws with no installation behind it, named in its configuration as %1$s. The site's copy of each installation's cave is one, under the name of its group of links; others are imported here, from a zip archive of such a directory. An imported set comes over the site's copy of the same name. A SilexGIS installation will later be able to export such an archive for a cave and its published trips."
+msgstr ""
+
+#. translators: 1: the data set's name, 2: how many files it holds
+#: includes/settings.php:399
+#, php-format
+msgid "The data set “%1$s” was imported: %2$d file."
+msgid_plural "The data set “%1$s” was imported: %2$d files."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: the data set's name
+#: includes/settings.php:403
+#, php-format
+msgid "The data set “%s” was deleted."
+msgstr ""
+
+#. translators: %s: the data set's name
+#: includes/settings.php:407
+#, php-format
+msgid "The data set “%s” could not be deleted."
+msgstr ""
+
+#. translators: %s: why the archive was refused
+#: includes/settings.php:411
+#, php-format
+msgid "Nothing was imported, and nothing was changed: %s"
+msgstr ""
+
+#: includes/settings.php:418
+msgid "No data set has been imported."
+msgstr ""
+
+#: includes/settings.php:422 includes/settings.php:465
+msgid "Name"
+msgstr ""
+
+#: includes/settings.php:423
+msgid "Files"
+msgstr ""
+
+#: includes/settings.php:424
+msgid "Imported"
+msgstr ""
+
+#. translators: %s: the data set's name
+#: includes/settings.php:448
+#, php-format
+msgid "Delete the data set “%s”? Pages that name it will have no cave."
+msgstr ""
+
+#: includes/settings.php:449
+msgid "Delete"
+msgstr ""
+
+#: includes/settings.php:461
+msgid "Archive (.zip)"
+msgstr ""
+
+#. translators: 1: the largest archive this server accepts, 2: the largest a set may unpack to
+#: includes/settings.php:472
+#, php-format
+msgid "Small letters without diacritics, digits, “-” and “_”, at most 40 characters: the name pages use. An archive with the name of a set already here replaces it whole. This server accepts archives of up to %1$s, unpacking to %2$s at most."
+msgstr ""
+
+#: includes/settings.php:478
+msgid "Import the archive"
+msgstr ""
+
+#: includes/settings.php:496 includes/settings.php:514 includes/trips-bundle.php:431
+msgid "You are not allowed to do this."
+msgstr ""
+
+#: includes/shortcode.php:200 includes/shortcode.php:207
+msgid "the configuration must be a JSON object: it begins with { and ends with }"
+msgstr ""
+
+#. translators: 1: the refused fields, 2: the fields that hold an address
+#: includes/shortcode.php:363
+#, php-format
+msgid "these fields break the rule for addresses: %1$s. An address (%2$s) is a path on this site — it begins with a single “/” and contains no host or scheme (https://…), no “//”, no “\\” and no “..”; survey is a file name in surveyDirectory, language is a language code, and no key may be named __proto__"
+msgstr ""
+
+#: includes/shortcode.php:397
+msgid "text after the end of the value"
+msgstr ""
+
+#. translators: 1: line number, 2: column number, 3: what was found there
+#: includes/shortcode.php:410
+#, php-format
+msgid "line %1$d, column %2$d: %3$s"
+msgstr ""
+
+#: includes/shortcode.php:427
+msgid "a comment — JSON allows no comments; delete it"
+msgstr ""
+
+#: includes/shortcode.php:430
+msgid "single quotes — JSON needs double quotes (\")"
+msgstr ""
+
+#: includes/shortcode.php:433
+msgid "an extra comma"
+msgstr ""
+
+#. translators: 1: what was expected, 2: what was found instead
+#: includes/shortcode.php:437
+#, php-format
+msgid "%1$s, but here there is “%2$s”"
+msgstr ""
+
+#: includes/shortcode.php:448
+msgid "a value was expected, but the text ended"
+msgstr ""
+
+#: includes/shortcode.php:469 includes/shortcode.php:479
+msgid "a value was expected"
+msgstr ""
+
+#: includes/shortcode.php:489
+msgid "a number written wrongly"
+msgstr ""
+
+#: includes/shortcode.php:507
+msgid "an incomplete \\u sequence — it needs four hexadecimal digits"
+msgstr ""
+
+#: includes/shortcode.php:515
+msgid "an unknown escape sequence after \\"
+msgstr ""
+
+#: includes/shortcode.php:524
+msgid "a string left open at the end of the line — is the closing quote missing?"
+msgstr ""
+
+#: includes/shortcode.php:525
+msgid "a control character inside a string"
+msgstr ""
+
+#: includes/shortcode.php:531
+msgid "a string that is never closed"
+msgstr ""
+
+#: includes/shortcode.php:547
+msgid "an extra comma before }"
+msgstr ""
+
+#: includes/shortcode.php:548
+msgid "a property name, in double quotes, was expected"
+msgstr ""
+
+#: includes/shortcode.php:556
+msgid "a “:” was expected after the property name"
+msgstr ""
+
+#: includes/shortcode.php:566
+msgid "an object that is never closed — the } is missing"
+msgstr ""
+
+#: includes/shortcode.php:575
+msgid "a “,” or a “}” was expected"
+msgstr ""
+
+#: includes/shortcode.php:592
+msgid "an extra comma before ]"
+msgstr ""
+
+#: includes/shortcode.php:600
+msgid "a list that is never closed — the ] is missing"
+msgstr ""
+
+#: includes/shortcode.php:609
+msgid "a “,” or a “]” was expected"
+msgstr ""
+
+#: includes/trips-bundle.php:408
+msgid "Every five minutes (the copy of the trips)"
+msgstr ""
+
+#: includes/trips-proxy.php:1097
+msgid "Published trips"
+msgstr ""
+
+#. translators: %d: a line number
+#: includes/trips-proxy.php:1153
+#, php-format
+msgid "line %d is not of the form “name = token”"
+msgstr ""
+
+#. translators: %d: a line number
+#: includes/trips-proxy.php:1158
+#, php-format
+msgid "line %d: a name may hold only letters without diacritics, digits, “_” and “-”, 40 characters at most — otherwise the page cannot ask for it"
+msgstr ""
+
+#. translators: %d: a line number
+#: includes/trips-proxy.php:1163
+#, php-format
+msgid "line %d: the token contains spaces"
+msgstr ""
+
+#. translators: 1: a line number, 2: the line the same name stands on
+#: includes/trips-proxy.php:1168
+#, php-format
+msgid "line %1$d: the name is repeated (it is on line %2$d as well)"
+msgstr ""
+
+#. translators: %s: the names of the links, separated by commas
+#: includes/trips-proxy.php:1215
+#, php-format
+msgid "The link %s stands alone in its group: if it stops answering, no other link answers in its place, and the page that uses it shows that no trip is being followed."
+msgid_plural "Each of the links %s stands alone in its group: if it stops answering, no other link answers in its place, and the page that uses it shows that no trip is being followed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/trips-proxy.php:1222
+msgid "The links of one cave carry the same name followed by -number (name-1, name-2)."
+msgstr ""
+
+#. translators: %d: how many links were saved
+#: includes/trips-proxy.php:1241
+#, php-format
+msgid "Saved: %d link, but without the installation's address: the pages get nothing until it is filled in."
+msgid_plural "Saved: %d links, but without the installation's address: the pages get nothing until it is filled in."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/trips-proxy.php:1244
+msgid "Saved: no links."
+msgstr ""
+
+#. translators: %d: how many links were saved
+#: includes/trips-proxy.php:1266
+#, php-format
+msgid "Saved: %d link, but the installation could not be reached at the address given, so the link was not checked. Until it answers, the page says that the trips could not be loaded."
+msgid_plural "Saved: %d links, but the installation could not be reached at the address given, so the links were not checked. Until it answers, the page says that the trips could not be loaded."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: how many links were saved, 2: what the installation answered instead, e.g. "status 503"
+#: includes/trips-proxy.php:1271
+#, php-format
+msgid "Saved: %1$d link, but the installation gave no answer just now (%2$s), so the link was not checked."
+msgid_plural "Saved: %1$d links, but the installation gave no answer just now (%2$s), so the links were not checked."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/trips-proxy.php:1274
+msgid "an answer that cannot be read"
+msgstr ""
+
+#. translators: %d: an HTTP status code
+#: includes/trips-proxy.php:1274
+#, php-format
+msgid "status %d"
+msgstr ""
+
+#. translators: %d: how many links were saved
+#: includes/trips-proxy.php:1280
+#, php-format
+msgid "Saved: %d link, but the installation answered 404 for it: either the address is not that of a SilexGIS installation, or the link has been revoked or has expired. Until this is corrected, the page says that no trip is being followed."
+msgid_plural "Saved: %d links, but the installation answered 404 for each of them: either the address is not that of a SilexGIS installation, or all the links have been revoked or have expired. Until this is corrected, the page says that no trip is being followed."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: 1: how many links were saved, 2: how many of them the installation answers for, 3: the names of the others
+#: includes/trips-proxy.php:1284
+#, php-format
+msgid "Saved: %1$d link; the installation answers for %2$d. No longer answering (revoked, expired or mistyped): %3$s."
+msgid_plural "Saved: %1$d links; the installation answers for %2$d. No longer answering (revoked, expired or mistyped): %3$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: how many links were saved
+#: includes/trips-proxy.php:1287
+#, php-format
+msgid "Saved: %d link; the installation answers for it."
+msgid_plural "Saved: %d links; the installation answers for all of them."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/trips-proxy.php:1312
+msgid "the installation's address must be of the form https://domain"
+msgstr ""
+
+#. translators: %s: what is wrong with the save, one problem after another
+#: includes/trips-proxy.php:1321
+#, php-format
+msgid "Nothing was saved: %s. The text below is the one that was sent."
+msgstr ""
+
+#: includes/trips-proxy.php:1336
+msgid "Only the scheme and the domain of the address were kept."
+msgstr ""
+
+#: includes/trips-proxy.php:1339
+msgid "The address is http: the links travel unencrypted between this server and the installation."
+msgstr ""
+
+#: includes/trips-proxy.php:1350
+msgid "The cache has been emptied."
+msgstr ""
+
+#. translators: 1 and 2: the start and the end of the emphasis on "is"
+#: includes/trips-proxy.php:1389
+#, php-format
+msgid "Every trip published in SilexGIS has a link of its own. The link %1$sis%2$s the key to it: whoever has it sees the page. That is why it is kept here, on the server, and not in the page the visitor reads."
+msgstr ""
+
+#: includes/trips-proxy.php:1396
+msgid "A link saved here is public from that moment."
+msgstr ""
+
+#. translators: %s: the address a link is read at through this site
+#: includes/trips-proxy.php:1400
+#, php-format
+msgid "The token never leaves the server, but what the installation shows through it — the trip, the party, the positions — can be read through this site by anybody who knows or guesses the link's name (%s), whether the page that uses it is published, a draft or protected by a password."
+msgstr ""
+
+#: includes/trips-proxy.php:1401
+msgctxt "a link's name, in an address"
+msgid "name"
+msgstr ""
+
+#: includes/trips-proxy.php:1410
+msgid "The installation's address"
+msgstr ""
+
+#: includes/trips-proxy.php:1413
+msgid "https://example.org"
+msgstr ""
+
+#: includes/trips-proxy.php:1415
+msgid "No path after it — only the scheme and the domain; whatever follows the domain is not kept. On saving, the installation is asked once for each link, and the message says what it answered."
+msgstr ""
+
+#: includes/trips-proxy.php:1420
+msgid "Links"
+msgstr ""
+
+#. translators: 1: the form of a line, 2: the configuration's field, 3 to 5: the characters named
+#: includes/trips-proxy.php:1428
+#, php-format
+msgid "One per line, in the form %1$s. The name appears in the page's configuration (%2$s) and may hold only letters without diacritics, digits, %3$s and %4$s, 40 characters at most; the token never leaves the server. Lines that begin with %5$s are notes and are kept as they were written. A line that cannot be understood stops the save and is named in the message: nothing is lost in silence."
+msgstr ""
+
+#: includes/trips-proxy.php:1429
+msgid "name = token"
+msgstr ""
+
+#: includes/trips-proxy.php:1439
+msgctxt "the name of another cave's links, as in other-1"
+msgid "other"
+msgstr ""
+
+#. translators: 1: the ending of a name, 2 and 3: two names of one cave's links, 4 and 5: two of another cave's
+#: includes/trips-proxy.php:1442
+#, php-format
+msgid "The links of one cave carry the same name followed by %1$s (%2$s, %3$s, …) and form a group. The archive and the tracks are asked for through the first link of the group that answers, beginning with the one that answered last: a revoked or expired link does not hide the archive while the group still has a valid one. The list of the followed trips is asked for through the link the page names, because the installation places the parties on the survey of the link that asks; only when that one stops answering does the list come through another link of the group, and the parties measured on another survey then appear without a position on the model; a link that refused the list is asked, for an hour, only after the others. Another cave's links get another name (%4$s, %5$s): a group never answers through another group's links. A name without %1$s is a group of its own."
+msgstr ""
+
+#: includes/trips-proxy.php:1443
+msgid "-number"
+msgstr ""
+
+#: includes/trips-proxy.php:1459 includes/trips-proxy.php:1466
+msgid "Empty the cache"
+msgstr ""
+
+#. translators: %s: the name of the button that empties the cache
+#: includes/trips-proxy.php:1465
+#, php-format
+msgid "The installation's answers are kept for a short time (a link's trip and the list of the followed trips 20 s, the archive 5 min, a finished trip's track 1 min). A corrected report, a revoked link or a cave made protected shows on the page after that long at the latest. The reader's browser may keep an answer as well, but for 20 s at most and never beyond the time the copy here has left: the two do not add up beyond the times above. A refusal by the installation is remembered for 20 s. If two different reads in a row get no answer, the installation is not asked for 20 s; if one and the same read gets no answer twice in a row — a long track, say — only that read is not made for 20 s, and the rest goes on. %s deletes the copies on this server at once; a browser that has just read an answer may still show it for 20 s at most. Saving empties it as well."
+msgstr ""
+
+#. translators: 1: a header's name, 2: a file's name, 3, 5 and 6: settings of the installation, 4: a setting of its web server, 7: a network mask
+#: includes/trips-proxy.php:1474
+#, php-format
+msgid "The installation counts requests per address, and every reader reaches it through this server, so as one single address. That is why this server sends the reader's address in %1$s; the installation takes it into account only if its operator declares this server a trusted proxy, in the installation's %2$s file: %3$s (one more than without this site: 3 under the TLS overlay, where the value is changed in the overlay's file and the address is also added to %4$s in the Caddyfile), %5$s the installation's Compose network (naming a network replaces the default list) and %6$s the address this server makes its requests from, with %7$s. Without these settings nothing changes. On shared hosting that address belongs to every site on the same server: declared trusted, any of them can present any address to the installation."
+msgstr ""

@@ -1,0 +1,16 @@
+{
+	"format": "silexgis-cave/1",
+	"writtenAt": "2026-10-16T08:00:00Z",
+	"source": "example",
+	"survey": { "file": "media/P8_Master.3d", "format": "3d" },
+	"places": [
+		{ "station": "p8.bens_dig.217", "label": "Top of the dig (example)", "depth": 0, "landmark": true },
+		{ "station": "p8.christmas_aven.25c", "label": "Upper aven (example)", "depth": 19, "landmark": true },
+		{ "station": "p8.christmas_aven.5d", "label": "Aven ledge (example)", "note": "about 30 m" },
+		{ "station": "p8.christmas_aven.2", "label": "Aven foot (example)", "depth": 52, "landmark": true },
+		{ "station": "p8.p8_sump_4-10_test.0", "label": "Sump (example)", "note": "65 – 70" }
+	],
+	"pictures": [
+		{ "station": "p8.christmas_aven.2", "file": "media/example-photo.png", "thumbnail": "media/example-photo.png", "caption": "An invented photograph" }
+	]
+}

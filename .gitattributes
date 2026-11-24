@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.3d binary
+*.lox binary
+*.mo binary
+*.zip binary
+*.png binary
+*.jpg binary

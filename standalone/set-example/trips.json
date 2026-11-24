@@ -1,0 +1,138 @@
+{
+ "format": "silexgis-trips-export/1",
+ "generatedAt": "2026-10-16T08:00:00Z",
+ "past": {
+  "trips": [
+   {
+    "tripLogId": "EX-1",
+    "title": "Example trip",
+    "tripDate": "2026-09-05",
+    "tripDateEnd": null,
+    "expedition": {
+     "id": "EX",
+     "name": "Example camp"
+    },
+    "armedAt": "2026-09-05T08:00:00Z",
+    "closedAt": "2026-09-05T14:00:00Z",
+    "positionsWithheld": false,
+    "participantCount": 2,
+    "playable": true
+   }
+  ],
+  "more": false
+ },
+ "tracks": {
+  "EX-1": {
+   "tripLogId": "EX-1",
+   "expedition": {
+    "id": "EX",
+    "name": "Example camp"
+   },
+   "title": "Example trip",
+   "tripDate": "2026-09-05",
+   "tripDateEnd": null,
+   "armedAt": "2026-09-05T08:00:00Z",
+   "closedAt": "2026-09-05T14:00:00Z",
+   "positionsWithheld": false,
+   "trackTruncated": false,
+   "model": null,
+   "teams": [],
+   "pictures": [],
+   "participants": [
+    {
+     "ordinal": 1,
+     "label": "Alex Example",
+     "track": [
+      {
+       "recordedAt": "2026-09-05T08:00:00Z",
+       "teamId": null,
+       "stationName": null,
+       "depthM": null,
+       "positionOnOtherModel": false,
+       "in": true,
+       "out": false
+      },
+      {
+       "recordedAt": "2026-09-05T09:00:00Z",
+       "teamId": null,
+       "stationName": "p8.christmas_aven.25c",
+       "depthM": -19,
+       "positionOnOtherModel": false,
+       "in": true,
+       "out": false
+      },
+      {
+       "recordedAt": "2026-09-05T10:30:00Z",
+       "teamId": null,
+       "stationName": "p8.christmas_aven.2",
+       "depthM": -52,
+       "positionOnOtherModel": false,
+       "in": true,
+       "out": false
+      },
+      {
+       "recordedAt": "2026-09-05T12:00:00Z",
+       "teamId": null,
+       "stationName": "p8.p8_sump_4-10_test.0",
+       "depthM": -65,
+       "positionOnOtherModel": false,
+       "in": true,
+       "out": false
+      },
+      {
+       "recordedAt": "2026-09-05T14:00:00Z",
+       "teamId": null,
+       "stationName": null,
+       "depthM": null,
+       "positionOnOtherModel": false,
+       "in": false,
+       "out": true
+      }
+     ]
+    },
+    {
+     "ordinal": 2,
+     "label": "Sam Sample",
+     "track": [
+      {
+       "recordedAt": "2026-09-05T08:00:00Z",
+       "teamId": null,
+       "stationName": null,
+       "depthM": null,
+       "positionOnOtherModel": false,
+       "in": true,
+       "out": false
+      },
+      {
+       "recordedAt": "2026-09-05T09:30:00Z",
+       "teamId": null,
+       "stationName": "p8.christmas_aven.25c",
+       "depthM": -19,
+       "positionOnOtherModel": false,
+       "in": true,
+       "out": false
+      },
+      {
+       "recordedAt": "2026-09-05T11:00:00Z",
+       "teamId": null,
+       "stationName": "p8.christmas_aven.5d",
+       "depthM": -30,
+       "positionOnOtherModel": false,
+       "in": true,
+       "out": false
+      },
+      {
+       "recordedAt": "2026-09-05T13:30:00Z",
+       "teamId": null,
+       "stationName": null,
+       "depthM": null,
+       "positionOnOtherModel": false,
+       "in": false,
+       "out": true
+      }
+     ]
+    }
+   ]
+  }
+ }
+}
