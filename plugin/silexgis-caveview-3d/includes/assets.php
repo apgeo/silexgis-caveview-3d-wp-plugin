@@ -187,8 +187,8 @@ function silex_ce_site_settings_script() {
 		// The language every page opens in unless it says another; a reader's own choice,
 		// made on the page, comes over both.
 		'language'    => silex_ce_language(),
-		// Where this site's proxy for published trips answers, so a page names only its slots.
-		'tripsBase'   => wp_make_link_relative( rest_url( SILEX_CE_REST_NAMESPACE . '/trips/' ) ),
+		// The root of this site's routes, which a page's trips source asks trips/<slot>… under, so a page names only its slots.
+		'tripsBase'   => wp_make_link_relative( rest_url( SILEX_CE_REST_NAMESPACE . '/' ) ),
 		// The site's copy of each cave's finished trips, and whether a page drawn from it says so.
 		'tripBundles' => (object) ( function_exists( 'silex_ce_bundle_for_pages' ) ? silex_ce_bundle_for_pages() : array() ),
 		// The data sets a page may name with `data: { group }`: the site's copy of each cave, or the
@@ -232,8 +232,18 @@ function silex_ce_asset_sets() {
 	);
 }
 
-/** Whether this content wants the given set. */
+/**
+ * Whether this content wants the given set.
+ *
+ * A page whose content loads a CaveView build itself (a script ending in CaveView2.js or
+ * CaveView2.min.js) owns its viewer, and is left entirely alone even when its markup looks
+ * like ours: a second viewer stack injected beside its own breaks both. Hand-built model pages
+ * made from a shared template are exactly such pages.
+ */
 function silex_ce_set_wants( $set, $content ) {
+	if ( preg_match( '#CaveView2(?:\.min)?\.js#', $content ) ) {
+		return false;
+	}
 	if ( false !== strpos( $content, $set['marker'] ) ) {
 		return true;
 	}

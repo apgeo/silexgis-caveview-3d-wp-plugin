@@ -57,6 +57,9 @@ $shortcode = '[silexgis_cave id="cave_model" places_id="cave_places"]An example 
 $out['box']     = silex_test_page( 'model-by-box', $shortcode, file_get_contents( '/silex-examples/page-config.json' ) );
 $out['none']    = silex_test_page( 'model-unconfigured', '[silexgis_cave id="cave_model"]' );
 $out['plain']   = silex_test_page( 'no-model', '<p>No model here.</p>' );
+// A hand-built model page that loads its own viewer, with markup like ours: left alone.
+kses_remove_filters();
+$out['own']     = silex_test_page( 'own-viewer', '<div class="cave_embed_model" id="cave_model_scene_1"></div><script src="/somewhere/CaveView/js/CaveView2.js"></script>' );
 
 // A page configured by a file named after its slug, in the pages' directory under the uploads.
 $pages = silex_ce_pages_dir();

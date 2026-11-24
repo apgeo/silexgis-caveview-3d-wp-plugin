@@ -70,6 +70,6 @@ time being — and the fix still lands here first.
 The plugin is not in the WordPress.org directory (`Update URI: false`). Listing it would need:
 removing `Update URI: false`; the readme's *External services* section kept accurate; human-readable
 source for the minified viewer build and the compiled trips fold available (they are, in the two
-repositories named in `NOTICE.md`, and the readme must link them); the AGPL-licensed trips fold
-either accepted by the review as GPL-compatible or relicensed by its copyright holder; and a clean
-run of the Plugin Check plugin.
+repositories named in `NOTICE.md`, and the readme must link them); and a clean run of the Plugin
+Check plugin. (The trips fold is offered under GPL-2.0-or-later as well as AGPL, so its licence is
+no obstacle; SilexGIS's bundle test keeps every file compiled into it that way.)

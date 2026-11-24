@@ -1,8 +1,8 @@
 # Notices
 
 The plugin and the component are licensed under the GNU General Public License, version 2 or
-(at your option) any later version — see `LICENSE`. Three parts come from elsewhere and keep
-their own licences.
+(at your option) any later version — see `LICENSE`. Three parts come from elsewhere; their
+licences are below.
 
 ## CaveView.js (the SilexGIS fork) — MIT
 
@@ -29,16 +29,15 @@ three.js (MIT, <https://github.com/mrdoob/three.js>).
 > DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 > OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-## The SilexGIS published-trip fold — AGPL-3.0-or-later
+## The SilexGIS published-trip fold — AGPL-3.0-or-later OR GPL-2.0-or-later
 
 `plugin/silexgis-caveview-3d/assets/js/silexgis-trips.js` is compiled, unchanged, from SilexGIS
-(<https://github.com/apgeo/silexgis>): the source is `client/src/publictrips/index.ts` and what it
-imports, built with `npm run build:trips` (`client/vite.trips.config.ts`). It is the rule that
+(<https://github.com/apgeo/silexgis>): the source is `client/src/publictrips/index.ts` and the files
+it imports, built with `npm run build:trips` (`client/vite.trips.config.ts`). It is the rule that
 decides where each member of a published trip was at a given moment, compiled from the same source
-the SilexGIS application uses so that the two cannot disagree. SilexGIS is licensed under the GNU
-Affero General Public License, version 3 or later, and so is this file; its source is the
-repository above. Section 13 of the GNU GPL version 3 permits combining it with the rest of the
-plugin, which is used under version 3 of the GPL for that purpose.
+the SilexGIS application uses so that the two cannot disagree. SilexGIS as a whole is
+AGPL-3.0-or-later; the files compiled into this one are offered under AGPL-3.0-or-later OR
+GPL-2.0-or-later, and are used here under GPL-2.0-or-later. The file's first line says the same.
 
 ## The example survey
 

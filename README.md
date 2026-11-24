@@ -83,5 +83,6 @@ After editing `assets/js/cave-journal.js`, run `python3 tools/stamp-journal.py` 
 
 ## Licence
 
-GPL-2.0-or-later (`LICENSE`). The CaveView.js build is MIT and the SilexGIS trips fold
-(`assets/js/silexgis-trips.js`) is AGPL-3.0-or-later; see [NOTICE.md](NOTICE.md).
+GPL-2.0-or-later (`LICENSE`). The CaveView.js build is MIT, and the SilexGIS trips fold
+(`assets/js/silexgis-trips.js`) is used under GPL-2.0-or-later, one of the two licences SilexGIS
+offers it under; see [NOTICE.md](NOTICE.md).

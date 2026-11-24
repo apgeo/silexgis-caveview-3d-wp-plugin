@@ -13,7 +13,7 @@
  *     sections, the body class swapped by the filter, no uncaught error;
  *   - a page configured by a file named after its slug in the uploads directory: drawn the same;
  *   - a page with the shortcode and no configuration: a console warning naming where to put one;
- *   - a page with no model: nothing of the plugin loaded, the body class left alone;
+ *   - a page with no model, and one that loads its own viewer: nothing of the plugin loaded;
  *   - the settings screen (in English, then with the site in Romanian), the trips route, the
  *     Deactivate question, and no PHP notice on any of them.
  *
@@ -137,7 +137,10 @@ try {
 	check('box page: the stylesheet comes from the plugin', (await page.$$eval('link[rel=stylesheet]', (els) => els.map((e) => e.href))).some((h) => h.includes('/plugins/silexgis-caveview-3d/assets/css/cave-embed.css?ver=')));
 	const site = await page.evaluate(() => window.SilexCaveEmbedSite);
 	check('box page: the site tells pages the shipped viewer as home', site && site.home === '/wp-content/plugins/silexgis-caveview-3d/vendor/caveview/2.9.0-slx.23/', site && site.home);
-	check('box page: and the trips proxy\'s address', site && site.tripsBase === '/wp-json/silexgis-caveview/v1/trips/', site && site.tripsBase);
+	check('box page: and the root its trips source asks trips/<slot> under', site && site.tripsBase === '/wp-json/silexgis-caveview/v1/', site && site.tripsBase);
+	// Asked the way cave-trips.js asks it: base + 'trips/' + slot + '/live'.
+	const viaBase = await page.evaluate((b) => fetch(b + 'trips/example-1/live').then((r) => r.status), site && site.tripsBase);
+	check('box page: that root answers for a slot the site holds', viaBase !== 404, 'status ' + viaBase);
 	check('box page: and the imported data set', site && site.datasets && site.datasets.example && /\/uploads\/silexgis-caveview-3d\/datasets\/example\/$/.test(site.datasets.example.base || ''), JSON.stringify(site && site.datasets));
 	check('box page: the create() call is printed', /window\.SilexCaveEmbed\.create\(/.test(r.html));
 	check('box page: the model is drawn and its places listed from the data set', await modelDrawn());
@@ -162,6 +165,11 @@ try {
 	r = await visit(setup.plain);
 	check('plain page: nothing of the plugin is loaded', !/silexgis-caveview-3d/.test(r.html));
 	check('plain page: the body class is left alone', await page.evaluate(() => document.body.classList.contains('page')));
+
+	// ---- a page that loads its own viewer ---------------------------------------------------
+	r = await visit(setup.own);
+	check('own-viewer page: its own viewer script survived the save', r.html.includes('/somewhere/CaveView/js/CaveView2.js'));
+	check('own-viewer page: nothing of the plugin is loaded beside it', !/silexgis-caveview-3d|SilexCaveEmbedSite/.test(r.html));
 
 	// ---- the trips route -------------------------------------------------------------------------
 	const live = await page.request.get(BASE + '/wp-json/silexgis-caveview/v1/trips/example-1/live');
