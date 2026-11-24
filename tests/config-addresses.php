@@ -49,7 +49,7 @@ if ( ! function_exists( 'silex_ce_config_address_faults' ) ) {
 
 $paths = array(
 	// value, allowed?
-	array( '/wp-content/plugins/silexgis-caveview-3d/vendor/caveview/2.9.0-slx.23/', true ),
+	array( '/wp-content/plugins/silexgis-caveview-3d/vendor/caveview/2.9.0-slx.25/', true ),
 	array( '/caves/pictures/thumbnails/', true ),
 	array( '/wp-json/silexgis-caveview/v1/', true ),
 	array( '/a', true ),

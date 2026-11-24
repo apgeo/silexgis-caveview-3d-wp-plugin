@@ -2,7 +2,6 @@
 	"container": "cave_model",
 	"placeList": "cave_places",
 	"language": "en",
-	"home": "/wp-content/plugins/silexgis-caveview-3d/vendor/caveview/2.9.0-slx.23/",
 	"surveyDirectory": "/wp-content/uploads/caves/",
 	"terrainDirectory": "/wp-content/uploads/caves/terrain/",
 	"survey": "P8_Master.3d",

@@ -351,7 +351,7 @@ def make_pot(plugin, entries):
         "# This file is distributed under the same licence as the plugin (GPL-3.0-or-later).",
         'msgid ""',
         'msgstr ""',
-        po_quote("Project-Id-Version: Silex Cave Embed %s\n" % plugin_version(plugin)),
+        po_quote("Project-Id-Version: SilexGIS CaveView 3D %s\n" % plugin_version(plugin)),
         po_quote("MIME-Version: 1.0\n"),
         po_quote("Content-Type: text/plain; charset=UTF-8\n"),
         po_quote("Content-Transfer-Encoding: 8bit\n"),

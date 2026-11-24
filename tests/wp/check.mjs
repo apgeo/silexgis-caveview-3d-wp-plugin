@@ -27,6 +27,7 @@
  * --keep leaves the stack up at http://127.0.0.1:8091/wp-admin/ (account below).
  */
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -41,6 +42,8 @@ const IMAGE = process.env.WP_IMAGE || 'wordpress:6.1.1-php7.4-apache';
 const USER = 'tester';
 const PASSWORD = 'throwaway-admin-password';
 const keep = process.argv.includes('--keep');
+// The viewer build the plugin ships, as its main file names it.
+const BUILD = /define\( 'SILEX_CE_CAVEVIEW_BUILD', '([^']+)' \);/.exec(readFileSync(join(here, '..', '..', 'plugin', 'silexgis-caveview-3d', 'silexgis-caveview-3d.php'), 'utf8'))[1];
 
 let failed = 0;
 let count = 0;
@@ -131,12 +134,12 @@ try {
 	check('box page: answers 200 with no PHP notice', r.status === 200 && phpComplaints(r.html) === 0, `status ${r.status}, ${phpComplaints(r.html)} notice(s)`);
 	const scripts = await page.$$eval('script[src]', (els) => els.map((e) => new URL(e.src).pathname));
 	const ix = (tail) => scripts.findIndex((s) => s.endsWith(tail));
-	check('box page: the viewer comes from the build the plugin ships', ix('/plugins/silexgis-caveview-3d/vendor/caveview/2.9.0-slx.23/js/CaveView2.min.js') >= 0);
-	const order = ['/vendor/caveview/2.9.0-slx.23/js/CaveView2.min.js', '/assets/js/lightbox.js', '/assets/js/text-autolink.js', '/assets/js/cave-embed.js', '/assets/js/silexgis-trips.js', '/assets/js/cave-trips.js'].map(ix);
+	check('box page: the viewer comes from the build the plugin ships', ix(`/plugins/silexgis-caveview-3d/vendor/caveview/${BUILD}/js/CaveView2.min.js`) >= 0);
+	const order = [`/vendor/caveview/${BUILD}/js/CaveView2.min.js`, '/assets/js/lightbox.js', '/assets/js/text-autolink.js', '/assets/js/cave-embed.js', '/assets/js/silexgis-trips.js', '/assets/js/cave-trips.js'].map(ix);
 	check('box page: the six scripts load in order, from the plugin', order.every((n, i) => n >= 0 && (i === 0 || n > order[i - 1])), order.join(','));
 	check('box page: the stylesheet comes from the plugin', (await page.$$eval('link[rel=stylesheet]', (els) => els.map((e) => e.href))).some((h) => h.includes('/plugins/silexgis-caveview-3d/assets/css/cave-embed.css?ver=')));
 	const site = await page.evaluate(() => window.SilexCaveEmbedSite);
-	check('box page: the site tells pages the shipped viewer as home', site && site.home === '/wp-content/plugins/silexgis-caveview-3d/vendor/caveview/2.9.0-slx.23/', site && site.home);
+	check('box page: the site tells pages the shipped viewer as home', site && site.home === `/wp-content/plugins/silexgis-caveview-3d/vendor/caveview/${BUILD}/`, site && site.home);
 	check('box page: and the root its trips source asks trips/<slot> under', site && site.tripsBase === '/wp-json/silexgis-caveview/v1/', site && site.tripsBase);
 	// Asked the way cave-trips.js asks it: base + 'trips/' + slot + '/live'.
 	const viaBase = await page.evaluate((b) => fetch(b + 'trips/example-1/live').then((r) => r.status), site && site.tripsBase);
@@ -148,6 +151,40 @@ try {
 		&& (await page.$$('.cave_columns [data-trip-log][data-for="cave_model"]')).length === 1 && !/\[silexgis_cave/.test(r.html));
 	check('box page: the body class filter swapped "page"', await page.evaluate(() => document.body.classList.contains('silex-wide-page') && !document.body.classList.contains('page')));
 	check('box page: no uncaught error', pageErrors.length === 0, pageErrors.slice(0, 3).join(' | '));
+
+	// ---- fullscreen refused, inside an ancestor that traps a fixed element ------------------
+	// What an iPhone does to an element's fullscreen, on a theme whose wrapper is transformed:
+	// the viewer must cover the window from under <body> and come back to its place after.
+	const before = await page.evaluate(() => {
+		Element.prototype.requestFullscreen = function () { return Promise.reject(new TypeError('refused')); };
+		Element.prototype.webkitRequestFullscreen = undefined;
+		document.querySelector('.cave_embed').parentElement.style.transform = 'translateZ(0)';
+		return document.getElementById('cave_model').getBoundingClientRect().height;
+	});
+	const pressFullscreen = () => page.evaluate(() => {
+		const bar = document.querySelector('.cv-toolbar');
+		const buttons = bar ? [...bar.children] : [];
+		buttons[buttons.length - 1].click();
+	});
+	await pressFullscreen();
+	await sleep(800);
+	const covered = await page.evaluate(() => {
+		const m = document.getElementById('cave_model');
+		const r = m.getBoundingClientRect();
+		const c = m.querySelector('canvas').getBoundingClientRect();
+		return { underBody: m.parentElement === document.body, w: r.width, h: r.height, cw: c.width, ch: c.height, vw: innerWidth, vh: innerHeight };
+	});
+	check('refused fullscreen: the viewer covers the window from under <body>',
+		covered.underBody && Math.abs(covered.w - covered.vw) < 2 && Math.abs(covered.h - covered.vh) < 2, JSON.stringify(covered));
+	check('refused fullscreen: and the model is drawn at that size', Math.abs(covered.cw - covered.vw) < 24 && Math.abs(covered.ch - covered.vh) < 24, JSON.stringify(covered));
+	await pressFullscreen();
+	await sleep(800);
+	const back = await page.evaluate(() => {
+		const m = document.getElementById('cave_model');
+		return { inBlock: Boolean(m.closest('.cave_embed')), h: m.getBoundingClientRect().height };
+	});
+	check('refused fullscreen: given back, the viewer is in its block at its height', back.inBlock && Math.abs(back.h - before) < 2, JSON.stringify({ ...back, before }));
+	check('refused fullscreen: no uncaught error', pageErrors.length === 0, pageErrors.slice(0, 3).join(' | '));
 
 	// ---- the page configured by a file named after its slug ------------------------------
 	r = await visit(setup.file);

@@ -9,7 +9,7 @@ licences are below.
 `plugin/silexgis-caveview-3d/vendor/caveview/<version>/` is a build of the `silexgis` branch of
 <https://github.com/apgeo/CaveView.js>, a fork of CaveView.js by aardgoose
 (<https://github.com/aardgoose/CaveView.js>). The source of every build is that branch at the
-commit stamped with the build's version (`2.9.0-slx.23` is commit `e6363220`). The build bundles
+commit stamped with the build's version (`2.9.0-slx.25` is commit `2ff9a2c4`). The build bundles
 three.js (MIT, <https://github.com/mrdoob/three.js>).
 
 > The MIT License (MIT) — Copyright (c) 2016 (as written in the CaveView.js LICENSE file)

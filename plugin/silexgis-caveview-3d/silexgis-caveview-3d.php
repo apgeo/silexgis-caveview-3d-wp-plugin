@@ -3,7 +3,7 @@
  * Plugin Name:       SilexGIS CaveView 3D
  * Plugin URI:        https://github.com/apgeo/silexgis-caveview-3d-wp-plugin
  * Description:       A cave's 3D survey model on a page — its places, photographs and the trips a SilexGIS installation publishes — driven by configuration.
- * Version:           1.0.0
+ * Version:           0.1.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            SilexGIS
@@ -53,13 +53,13 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SILEX_CE_VERSION', '1.0.0' );
+define( 'SILEX_CE_VERSION', '0.1.0' );
 define( 'SILEX_CE_FILE', __FILE__ );
 define( 'SILEX_CE_DIR', __DIR__ );
 define( 'SILEX_CE_SLUG', 'silexgis-caveview-3d' );
 
 /** The build of the CaveView.js fork shipped under vendor/caveview/. */
-define( 'SILEX_CE_CAVEVIEW_BUILD', '2.9.0-slx.23' );
+define( 'SILEX_CE_CAVEVIEW_BUILD', '2.9.0-slx.25' );
 
 /** The shortcode that puts a model on a page; the journal's shortcodes carry it as their prefix. */
 define( 'SILEX_CE_SHORTCODE', 'silexgis_cave' );

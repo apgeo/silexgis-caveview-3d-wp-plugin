@@ -4,7 +4,7 @@ Tags: cave, 3d, survey, caveview, speleology
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 0.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,9 +112,10 @@ site's own; a reinstall finds them where they were.
 
 == Changelog ==
 
-= 1.0.0 =
+= 0.1.0 =
 * First release as a generic plugin: the component and a build of the CaveView.js fork
-  (2.9.0-slx.23) ship inside it; shortcodes `[silexgis_cave]`, `[silexgis_cave_day_trips]`,
+  (2.9.0-slx.25: toolbar titles from the viewer's catalogue, and a refused fullscreen — as on
+  an iPhone — covers the window instead) ship inside it; shortcodes `[silexgis_cave]`, `[silexgis_cave_day_trips]`,
   `[silexgis_cave_stats]`, `[silexgis_cave_trip_log]`, `[silexgis_cave_columns]`; REST namespace
   `silexgis-caveview/v1`.
 * A page's configuration in post meta, through a box on the page, or in a file named after the page.
